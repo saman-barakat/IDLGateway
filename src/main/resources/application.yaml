@@ -1,0 +1,15 @@
+server:
+  port: 8090
+
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: employeeModule
+          uri: http://localhost:8081/
+          predicates:
+            - Path=/api/**
+          filters:
+            #- RewritePath=/api/(?<segment>/?.*), /api/validation
+            - IDLValidationFilter
+
