@@ -5,10 +5,12 @@ spring:
   cloud:
     gateway:
       routes:
-        - id: employeeModule
-          uri: http://localhost:8081/
+        - id: YelpService
+          uri: https://api.yelp.com
+          #uri: http://localhost:8081
           predicates:
-            - Path=/api/**
+             - Path=/v3/**
+             #- Path=/api/**
           filters:
             #- RewritePath=/api/(?<segment>/?.*), /api/validation
             - IDLValidationFilter
