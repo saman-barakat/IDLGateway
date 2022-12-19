@@ -50,12 +50,6 @@
 			<version>1.0.1</version>
 		</dependency>
 
-		<!-- IDL dependency -->
-		<dependency>
-			<groupId>es.us.isa</groupId>
-			<artifactId>idl-choco</artifactId>
-			<version>1.0.0</version>
-		</dependency>
 
 	</dependencies>
 	<dependencyManagement>
