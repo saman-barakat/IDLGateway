@@ -1,7 +1,6 @@
 package es.us.isa.idl.idlgateway.filters;
 
 
-
 import idlanalyzer.analyzer.Analyzer;
 import idlanalyzer.analyzer.OASAnalyzer;
 import idlanalyzer.configuration.IDLException;
@@ -40,7 +39,9 @@ public class IDLValidationFilter extends AbstractGatewayFilterFactory<IDLValidat
                 String operationType = exchange.getRequest().getMethodValue().toLowerCase();
                 Map<String, String> paramMap = exchange.getRequest().getQueryParams().toSingleValueMap();
 
-                Analyzer analyzer = new OASAnalyzer("oas", SPEC_URL, operationPath, operationType, false);
+                Analyzer analyzer = null;
+
+                    analyzer = new OASAnalyzer("oas", SPEC_URL, operationPath, operationType, false);
 
                 boolean valid = analyzer.isValidRequest(paramMap);
 
