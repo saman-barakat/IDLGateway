@@ -1,9 +1,8 @@
 package es.us.isa.idl.idlgateway.filters;
 
 
-import idlanalyzer.analyzer.Analyzer;
-import idlanalyzer.analyzer.OASAnalyzer;
-import idlanalyzer.configuration.IDLException;
+
+
 import lombok.extern.java.Log;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
@@ -11,6 +10,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.server.ResponseStatusException;
+
+import idlanalyzer.analyzer.Analyzer;
+import idlanalyzer.analyzer.OASAnalyzer;
+import idlanalyzer.configuration.IDLException;
 
 import java.util.Map;
 

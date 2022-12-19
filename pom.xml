@@ -43,6 +43,19 @@
 			<artifactId>jackson-core</artifactId>
 			<version>2.13.3</version>
 		</dependency>
+		
+		<dependency>
+			<groupId>es.us.isa</groupId>
+			<artifactId>IDLAnalyzer</artifactId>
+			<version>1.0.1</version>
+		</dependency>
+
+		<!-- IDL dependency -->
+		<dependency>
+			<groupId>es.us.isa</groupId>
+			<artifactId>idl-choco</artifactId>
+			<version>1.0.0</version>
+		</dependency>
 
 	</dependencies>
 	<dependencyManagement>
