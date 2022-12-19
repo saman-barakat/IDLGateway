@@ -10,4 +10,4 @@ jobs:
       uses: heroku/deploy-via-git-action@v1
       with:
         heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
-        app_name: your-app-name
+        app_name: idlgateway
