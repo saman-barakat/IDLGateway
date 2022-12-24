@@ -8,7 +8,7 @@ spring:
           predicates:
              - Path=/v3/**
              #- Path=/api/**
-          filters:
+          #filters:
             #- RewritePath=/api/(?<segment>/?.*), /api/validation
-            - IDLValidationFilter
+            #- IDLValidationFilter
 
