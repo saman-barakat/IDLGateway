@@ -4,7 +4,6 @@ spring:
       routes:
         - id: YelpService
           uri: https://api.yelp.com
-          #uri: http://localhost:8081
           predicates:
              - Path=/v3/**
              #- Path=/api/**
