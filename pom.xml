@@ -5,13 +5,13 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.7.1</version>
+		<version>3.0.1</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>es.us.isa.idl</groupId>
-	<artifactId>IDLGateway</artifactId>
+	<artifactId>APIGateway</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>IDLGateway</name>
+	<name>APIGateway</name>
 	<description>This project implements IDL Gateway.</description>
 	<properties>
 		<java.version>11</java.version>

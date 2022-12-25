@@ -6,8 +6,4 @@ spring:
           uri: https://api.yelp.com
           predicates:
              - Path=/v3/**
-             #- Path=/api/**
-          #filters:
-            #- RewritePath=/api/(?<segment>/?.*), /api/validation
-            #- IDLValidationFilter
 

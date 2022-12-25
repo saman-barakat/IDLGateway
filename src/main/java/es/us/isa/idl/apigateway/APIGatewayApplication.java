@@ -1,13 +1,13 @@
-package es.us.isa.idl.idlgateway;
+package es.us.isa.idl.apigateway;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class IdlGatewayApplication {
+public class APIGatewayApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(IdlGatewayApplication.class, args);
+		SpringApplication.run(APIGatewayApplication.class, args);
 	}
 
 }
