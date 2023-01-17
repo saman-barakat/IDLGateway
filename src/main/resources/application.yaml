@@ -2,8 +2,17 @@ spring:
   cloud:
     gateway:
       routes:
-        - id: YelpService
+        - id: YelpAPIBusinesses
           uri: https://api.yelp.com
           predicates:
-             - Path=/v3/**
+             - Path=/v3/businesses/**
+        - id: YelpAPITransactions
+          uri: https://api.yelp.com
+          predicates:
+             - Path=/v3/transactions/**
+        - id: DHLAPILocationFinder
+          uri: https://api.dhl.com
+          predicates:
+             - Path=/location-finder/v1/**
+          
 
