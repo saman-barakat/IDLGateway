@@ -22,14 +22,14 @@ spring:
           uri: https://gateway.marvel.com
           predicates:
              - Path=/v1/public/**
-        - id: OmdbAPIBySearch
-          uri: https://omdbapi.com
-          predicates:
-             - Path=/**
-        - id: OmdbAPIByTitleOrID
-          uri: https://omdbapi.com
-          predicates:
-             - Path=/**
+       # - id: OmdbAPIBySearch
+       #   uri: https://omdbapi.com
+       #   predicates:
+       #      - Path=/**
+       # - id: OmdbAPIByTitleOrID
+       #   uri: https://omdbapi.com
+       #   predicates:
+       #      - Path=/**
         - id: SpotifyAPIAlbums
           uri: https://api.spotify.com
           predicates:
