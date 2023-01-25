@@ -29,7 +29,7 @@ public class IDLDetectionAndExplanationFilter extends AbstractGatewayFilterFacto
  
                 if(requestPath.contains("businesses")) {
                 	operationPath = "/businesses/search";
-                	SPEC_URL = "./src/test/resources/GatewayExperiment/Yelp/swagger.yaml";
+                	SPEC_URL = "./src/test/resources/GatewayExperiment/Yelp/openapi.yaml";
                 }
                 else if(requestPath.contains("flight-offers")) {
                 	operationPath = "/shopping/flight-offers";
