@@ -1,10 +1,9 @@
-package es.us.isa.idl.filters;
+package es.us.isa.idl.apigateway.filters;
 
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
-import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.server.ResponseStatusException;
 
 import idlanalyzer.analyzer.Analyzer;
@@ -14,10 +13,9 @@ import idlanalyzer.configuration.IDLException;
 import java.util.Map;
 
 @Component
-public class IDLDetectionFilter extends AbstractGatewayFilterFactory<IDLDetectionFilter.Config> {
+public class IDLDetectionAndExplanationFilter extends AbstractGatewayFilterFactory<IDLDetectionAndExplanationFilter.Config> {
 
-    public IDLDetectionFilter() { super(IDLDetectionFilter.Config.class); }
-
+    public IDLDetectionAndExplanationFilter() { super(Config.class); }
     @Override
   
     public GatewayFilter apply(Config config) {
@@ -28,7 +26,7 @@ public class IDLDetectionFilter extends AbstractGatewayFilterFactory<IDLDetectio
             	String SPEC_URL = null;
             	String operationPath = null;
             	String requestPath = exchange.getRequest().getPath().toString();
-
+ 
                 if(requestPath.contains("businesses")) {
                 	operationPath = "/businesses/search";
                 	SPEC_URL = "./src/test/resources/GatewayExperiment/Yelp/swagger.yaml";
@@ -57,21 +55,20 @@ public class IDLDetectionFilter extends AbstractGatewayFilterFactory<IDLDetectio
                 else {
                 	throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Path did not match!");
                 }
-
                 String operationType = exchange.getRequest().getMethodValue().toLowerCase();
                 Map<String, String> paramMap = exchange.getRequest().getQueryParams().toSingleValueMap();
                 Analyzer analyzer = null;
 
-                analyzer = new OASAnalyzer("oas", SPEC_URL, operationPath, operationType, false);
-
+                    analyzer = new OASAnalyzer("oas", SPEC_URL, operationPath, operationType, false);
+                    
                 boolean valid = analyzer.isValidRequest(paramMap);
 
                 if (!valid) {
-                    throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The request is invalid!");
+                    throw new ResponseStatusException(HttpStatus.BAD_REQUEST, analyzer.getRequestExplanation(paramMap).toString());
                 }
 
                 return chain.filter(exchange);
-
+                
             } catch (IDLException e) {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
             }

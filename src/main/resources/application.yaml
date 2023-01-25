@@ -5,28 +5,7 @@ spring:
         - id: YelpAPI
           uri: https://api.yelp.com
           predicates:
-           - Path=/v3/businesses/**
-          #filters:
-            #- IDLDetectionFilter
+            - Path=/v3/businesses/**
+          filters:
+            - IDLDetectionFilter
             #- IDLDetectionAndExplanationFilter
-        - id: AmadeusFlightAPI
-          uri: https://test.api.amadeus.com
-          predicates:
-            - Path=/v2/shopping/**
-          #filters:
-            #- IDLDetectionFilter
-            #- IDLDetectionAndExplanationFilter
-        - id: AmadeusHotelAPI
-          uri: https://test.api.amadeus.com
-          predicates:
-            - Path=/v3/shopping/**
-          #filters:
-            #- IDLDetectionFilter
-            #- IDLDetectionAndExplanationFilter
-        - id: GitHubAPI
-          uri: https://api.github.com
-          predicates:
-            - Path=/orgs/**
-          #filters:
-           #- IDLDetectionFilter
-           #- IDLDetectionAndExplanationFilter
