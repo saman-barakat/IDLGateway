@@ -1,5 +1,7 @@
 package es.us.isa.idl.apigateway.filters;
 
+import java.util.Map;
+
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.http.HttpStatus;
@@ -9,8 +11,6 @@ import org.springframework.web.server.ResponseStatusException;
 import idlanalyzer.analyzer.Analyzer;
 import idlanalyzer.analyzer.OASAnalyzer;
 import idlanalyzer.configuration.IDLException;
-
-import java.util.Map;
 
 @Component
 public class IDLDetectionAndExplanationFilter extends AbstractGatewayFilterFactory<IDLDetectionAndExplanationFilter.Config> {
