@@ -5,7 +5,7 @@ spring:
         - id: YelpAPI
           uri: https://api.yelp.com
           predicates:
-            - Path=/v3/businesses/**
-          filters:
-            - IDLDetectionFilter
+              - Path=/v3/businesses/**
+          #filters:
+            #  - IDLDetectionFilter
             #- IDLDetectionAndExplanationFilter

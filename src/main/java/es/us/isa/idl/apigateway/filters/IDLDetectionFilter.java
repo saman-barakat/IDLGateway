@@ -29,10 +29,11 @@ public class IDLDetectionFilter extends AbstractGatewayFilterFactory<IDLDetectio
             	String SPEC_URL = null;
             	String operationPath = null;
             	String requestPath = exchange.getRequest().getPath().toString();
-
+                System.out.println("Yelp" + requestPath);
                 if(requestPath.contains("businesses")) {
+                    System.out.println("Yelp" + requestPath);
                 	operationPath = "/businesses/search";
-                	SPEC_URL = "./src/test/resources/GatewayExperiment/Yelp/swagger.yaml";
+                	SPEC_URL = "./src/test/resources/GatewayExperiment/Yelp/openapi.yaml";
                 }
                 else if(requestPath.contains("flight-offers")) {
                 	operationPath = "/shopping/flight-offers";
