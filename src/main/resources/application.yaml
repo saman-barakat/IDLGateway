@@ -5,65 +5,28 @@ spring:
         - id: YelpAPI
           uri: https://api.yelp.com
           predicates:
-             - Path=/v3/businesses/**
+           - Path=/v3/businesses/**
           #filters:
-             #- IDLDetectionFilter
-             #- IDLDetectionAndExplanationFilter
+            #- IDLDetectionFilter
+            #- IDLDetectionAndExplanationFilter
         - id: AmadeusFlightAPI
           uri: https://test.api.amadeus.com
           predicates:
-             - Path=/v2/shopping/**
-          filters:
-             - IDLDetectionFilter
-             #- IDLDetectionAndExplanationFilter
+            - Path=/v2/shopping/**
+          #filters:
+            #- IDLDetectionFilter
+            #- IDLDetectionAndExplanationFilter
         - id: AmadeusHotelAPI
           uri: https://test.api.amadeus.com
           predicates:
-             - Path=/v3/shopping/**
-          filters:
-             - IDLDetectionFilter
-             #- IDLDetectionAndExplanationFilter
+            - Path=/v3/shopping/**
+          #filters:
+            #- IDLDetectionFilter
+            #- IDLDetectionAndExplanationFilter
         - id: GitHubAPI
           uri: https://api.github.com
           predicates:
-             - Path=/orgs/**
-          filters:
-             - IDLDetectionFilter
-             #- IDLDetectionAndExplanationFilter
-        - id: MarvelAPI
-          uri: https://gateway.marvel.com
-          predicates:
-             - Path=/v1/public/**
-          filters:
-             - IDLDetectionFilter
-             #- IDLDetectionAndExplanationFilter
-       # - id: OmdbAPIBySearch
-       #   uri: https://omdbapi.com
-       #   predicates:
-       #      - Path=/**
-       # - id: OmdbAPIByTitleOrID
-       #   uri: https://omdbapi.com
-       #   predicates:
-       #      - Path=/**
-        - id: SpotifyAPIAlbums
-          uri: https://api.spotify.com
-          predicates:
-             - Path=/v1/albums/**
-          filters:
-             - IDLDetectionFilter
-             #- IDLDetectionAndExplanationFilter
-        - id: SpotifyAPIArtists
-          uri: https://api.spotify.com
-          predicates:
-             - Path=/v1/artists/**
-          filters:
-             - IDLDetectionFilter
-             #- IDLDetectionAndExplanationFilter
-        - id: YoutubeAPI
-          uri: https://youtube.googleapis.com/
-          predicates:
-             - Path=/youtube/**
-          filters:
-             - IDLDetectionFilter
-             #- IDLDetectionAndExplanationFilter
-
+            - Path=/orgs/**
+          #filters:
+           #- IDLDetectionFilter
+           #- IDLDetectionAndExplanationFilter
