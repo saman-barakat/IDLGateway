@@ -29,9 +29,8 @@ public class IDLDetectionFilter extends AbstractGatewayFilterFactory<IDLDetectio
             	String SPEC_URL = null;
             	String operationPath = null;
             	String requestPath = exchange.getRequest().getPath().toString();
-                System.out.println("Yelp" + requestPath);
+
                 if(requestPath.contains("businesses")) {
-                    System.out.println("Yelp" + requestPath);
                 	operationPath = "/businesses/search";
                 	SPEC_URL = "./src/test/resources/GatewayExperiment/Yelp/openapi.yaml";
                 }
@@ -64,7 +63,6 @@ public class IDLDetectionFilter extends AbstractGatewayFilterFactory<IDLDetectio
                 Map<String, String> paramMap = exchange.getRequest().getQueryParams().toSingleValueMap();
                 Analyzer analyzer = null;
 
-                System.out.println("paramMap: " + paramMap);
                 analyzer = new OASAnalyzer("oas", SPEC_URL, operationPath, operationType, false);
 
                 boolean valid = analyzer.isValidRequest(paramMap);
