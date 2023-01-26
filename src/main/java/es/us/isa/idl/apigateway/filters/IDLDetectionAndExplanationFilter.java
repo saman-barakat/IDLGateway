@@ -59,9 +59,13 @@ public class IDLDetectionAndExplanationFilter extends AbstractGatewayFilterFacto
                 Map<String, String> paramMap = exchange.getRequest().getQueryParams().toSingleValueMap();
                 Analyzer analyzer = null;
 
-                    analyzer = new OASAnalyzer("oas", SPEC_URL, operationPath, operationType, false);
-                    
+                analyzer = new OASAnalyzer("oas", SPEC_URL, operationPath, operationType, false);
+
+                System.out.println("paramMap: " + paramMap);
+
                 boolean valid = analyzer.isValidRequest(paramMap);
+
+                System.out.println("Valid: " + valid);
 
                 if (!valid) {
                     throw new ResponseStatusException(HttpStatus.BAD_REQUEST, analyzer.getRequestExplanation(paramMap).toString());

@@ -143,6 +143,8 @@ paths:
         required: false
         schema:
           type: integer
+          minimum: 1673524942
+          maximum: 1674736773
       - name: attributes
         in: query
         description: Optional. Try these additional filters to return specific search
