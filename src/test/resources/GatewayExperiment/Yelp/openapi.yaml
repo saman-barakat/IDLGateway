@@ -143,8 +143,8 @@ paths:
         required: false
         schema:
           type: integer
-          minimum: 1673524942
-          maximum: 1674736773
+          minimum: 1674219229
+          maximum: 1674824029
       - name: attributes
         in: query
         description: Optional. Try these additional filters to return specific search
@@ -220,123 +220,6 @@ paths:
         - AllOrNone(reservation_date, reservation_time, reservation_covers);
       responses:
         200:
-          description: Returns all businesses
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/BusinessesResult"
+          description: Returns all businesses that match the search criteria.
         400:
           description: bad request
-components:
-  schemas:
-    BusinessesResult:
-      type: object
-      properties:
-        total:
-          type: integer
-        region:
-          type: object
-          properties:
-            center:
-              type: object
-              properties:
-                latitude:
-                  type: number
-                longitude:
-                  type: number
-        businesses:
-          type: array
-          items:
-            type: object
-            properties:
-              categories:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    alias:
-                      type: string
-                    title:
-                      type: string
-              coordinates:
-                type: object
-                properties:
-                  latitude:
-                    type: number
-                  longitude:
-                    type: number
-              display_phone:
-                type: string
-              distance:
-                type: number
-              id:
-                type: string
-              alias:
-                type: string
-              image_url:
-                type: string
-              is_closed:
-                type: boolean
-              name:
-                type: string
-              phone:
-                type: string
-              price:
-                type: string
-                enum:
-                  - $
-                  - $$
-                  - $$$
-                  - $$$$
-                  - £
-                  - ££
-                  - £££
-                  - ££££
-                  - €
-                  - €€
-                  - €€€
-                  - €€€€
-                  - ￥
-                  - ￥￥
-                  - ￥￥￥
-                  - ￥￥￥￥
-              rating:
-                type: number
-                minimum: 1
-                maximum: 5
-              review_count:
-                type: integer
-              url:
-                type: string
-              transactions:
-                type: array
-                items:
-                  type: string
-                  enum:
-                    - pickup
-                    - delivery
-                    - restaurant_reservation
-              location:
-                type: object
-                properties:
-                  address1:
-                    type: string
-                    nullable: true
-                  address2:
-                    type: string
-                    nullable: true
-                  address3:
-                    type: string
-                    nullable: true
-                  city:
-                    type: string
-                  country:
-                    type: string
-                  display_address:
-                    type: array
-                    items:
-                      type: string
-                  state:
-                    type: string
-                  zip_code:
-                    type: string
