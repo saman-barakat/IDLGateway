@@ -147,8 +147,9 @@ paths:
             type: string
       x-dependencies:
         - OnlyOne(chart, id, myRating);
+        - OnlyOne(maxHeight, maxWidth);
         - IF id THEN NOT maxResults;
-        - IF id THEN NOT pageToken;
+       # - IF id THEN NOT pageToken;
         #  - ZeroOrOne(maxResults, id);
         #  - ZeroOrOne(pageToken, id);
         - IF regionCode THEN chart;
