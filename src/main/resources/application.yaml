@@ -7,8 +7,8 @@ spring:
           predicates:
               - Path=/v3/businesses/**
           filters:
-             # - IDLDetectionFilter
-              - IDLDetectionAndExplanationFilter
+              - IDLDetectionFilter
+              #- IDLDetectionAndExplanationFilter
         - id: AmadeusFlightAPI
           uri: https://test.api.amadeus.com
           predicates:
