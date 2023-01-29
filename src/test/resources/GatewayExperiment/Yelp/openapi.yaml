@@ -214,7 +214,7 @@ paths:
           type: boolean
       x-dependencies:
         - Or(location, latitude AND longitude);
-        - ZeroOrOne(open_now, open_at);
+        - ZeroOrOne(open_now == true, open_at);
         - offset + limit <= 1000;
         - IF offset AND NOT limit THEN offset <= 980;
         - AllOrNone(reservation_date, reservation_time, reservation_covers);
