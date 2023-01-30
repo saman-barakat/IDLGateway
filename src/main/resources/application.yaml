@@ -27,6 +27,6 @@ spring:
           uri: https://youtube.googleapis.com/
           predicates:
             - Path=/youtube/**
-          filters:
+          #filters:
             #  - IDLDetectionFilter
-              - IDLDetectionAndExplanationFilter
+             # - IDLDetectionAndExplanationFilter
