@@ -147,10 +147,19 @@ paths:
             type: string
       x-dependencies:
         - OnlyOne(chart, id, myRating);
-        - ZeroOrOne(maxResults, id);
-        - ZeroOrOne(pageToken, id);
-        - IF regionCode THEN chart;
-        - IF videoCategoryId THEN chart;
+       # - IF (chart AND videoCategoryId) THEN (videoCategoryId < 30);
+        #- ZeroOrOne(maxResults, id);
+       # - ZeroOrOne(pageToken, id);
+       # - IF (regionCode OR videoCategoryId) THEN NOT id;
+        #- IF (regionCode OR videoCategoryId) THEN NOT myRating;
+       # - IF regionCode THEN chart;
+       # - IF videoCategoryId THEN chart;
+       # - OnlyOne(maxHeight, maxWidth);
+       # - IF id THEN NOT maxResults;
+       # - IF id THEN NOT pageToken;
+       # - IF regionCode THEN chart;
+       # - IF videoCategoryId THEN chart;
+      #  - IF videoCategoryId THEN videoCategoryId < 30;
       responses:
         "200":
           content:
