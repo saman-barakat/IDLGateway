@@ -54,7 +54,10 @@ public class IDLDetectionFilter extends AbstractGatewayFilterFactory<IDLDetectio
                 	operationPath = "/youtube/v3/videos";
                 	SPEC_URL = "./src/test/resources/GatewayExperiment/YouTube/openapi.yaml";
                 }
-
+                else if(requestPath.contains("address")) {
+                    operationPath = "/find-by-address";
+                    SPEC_URL = "./src/test/resources/GatewayExperiment/DHL/openapi.yaml";
+                }
                 else {
                 	throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Path did not match!");
                 }
