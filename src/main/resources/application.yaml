@@ -27,8 +27,8 @@ spring:
           uri: https://youtube.googleapis.com
           predicates:
             - Path=/youtube/**
-          filters:
-              - IDLDetectionFilter
+          #filters:
+             # - IDLDetectionFilter
              # - IDLDetectionAndExplanationFilter
         - id: DHLAPI
           uri: https://api.dhl.com
