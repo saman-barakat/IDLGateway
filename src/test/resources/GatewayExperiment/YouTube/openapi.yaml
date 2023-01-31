@@ -169,10 +169,10 @@ paths:
           description: Successful response
         "400":
           description: 400
-#        "403":
-#          description: 403
-#        "404":
-#          description: 404
+        "403":
+          description: 403
+        "404":
+         description: 404
       security:
         - Oauth2:
             - https://www.googleapis.com/auth/youtube
