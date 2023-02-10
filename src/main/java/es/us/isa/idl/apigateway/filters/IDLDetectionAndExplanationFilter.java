@@ -55,6 +55,10 @@ public class IDLDetectionAndExplanationFilter extends AbstractGatewayFilterFacto
                     operationPath = "/find-by-address";
                     SPEC_URL = "./src/test/resources/GatewayExperiment/DHL/openapi.yaml";
                 }
+                else if(requestPath.contains("places")) {
+                    operationPath = "/places/search";
+                    SPEC_URL = "./src/test/resources/GatewayExperiment/Foursquare/openapi.yaml";
+                }
                 else {
                 	throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Path did not match!");
                 }

@@ -37,3 +37,10 @@ spring:
           #filters:
             #- IDLDetectionFilter
             #   - IDLDetectionAndExplanationFilter
+        - id: FSQAPI
+          uri: https://api.foursquare.com
+          predicates:
+            - Path=/v3/**
+          filters:
+            #- IDLDetectionFilter
+             - IDLDetectionAndExplanationFilter

@@ -1,0 +1,322 @@
+---
+auth:
+  required: true
+  queryParams: {}
+  headerParams: {}
+  apiKeysPath: null
+  headersPath: FSQ/apikeys.json
+  oauthPath: null
+testConfiguration:
+  operations:
+  - testPath: /places/search
+    operationId: PlaceSearch
+    method: get
+    testParameters:
+    - name: query
+      in: query
+      weight: 0.5
+      generators:
+      - type: RandomEnglishWord
+        genParameters:
+        - name: maxWords
+          values:
+          - 1
+          objectValues: null
+        valid: true
+    - name: ll
+      in: query
+      weight: 0.5
+      generators:
+      - valid: true
+        type: RandomInputValue
+        genParameters:
+        - name: values
+          values:
+            - 37.42307,-122.08427
+            - 37.392191,-5.995193
+            - 35.681999,139.769254
+            - -33.924278,18.424572
+            - -37.812746,144.961832
+            - 39.925412,32.834169
+            - 50.447273,30.520903
+            - 39.904325,116.405302
+            - 13.753789,100.501572
+            - 19.430849,-99.135857
+            - 47.020917,28.860922
+            - 23.999919,90.418527
+            - -33.301720,-66.335946
+          objectValues: null
+    - name: radius
+      in: query
+      weight: 0.5
+      generators:
+      - type: RandomNumber
+        genParameters:
+        - name: type
+          values:
+          - integer
+          objectValues: null
+        - name: min
+          values:
+          - 0
+          objectValues: null
+        - name: max
+          values:
+          - 100000
+          objectValues: null
+        valid: true
+    - name: categories
+      in: query
+      weight: 0.5
+      generators:
+      - valid: true
+        type: RandomInputValue
+        genParameters:
+        - name: csv
+          values:
+          - "src/test/resources/GatewayExperiment/Foursquare/categories.csv"
+          objectValues: null
+    - name: chains
+      in: query
+      weight: 0.5
+      generators:
+      - valid: true
+        type: RandomInputValue
+        genParameters:
+        - name: csv
+          values:
+          - "src/test/resources/GatewayExperiment/Foursquare/chains.csv"
+          objectValues: null
+    - name: exclude_chains
+      in: query
+      weight: 0.5
+      generators:
+      - valid: true
+        type: RandomInputValue
+        genParameters:
+        - name: csv
+          values:
+            - "src/test/resources/GatewayExperiment/Foursquare/chains.csv"
+          objectValues: null
+    - name: exclude_all_chains
+      in: query
+      weight: 0.5
+      generators:
+      - type: RandomBoolean
+        genParameters: []
+        valid: true
+    - name: fields
+      in: query
+      weight: 0.5
+      generators:
+      - valid: true
+        type: RandomInputValue
+        genParameters:
+        - name: values
+          values:
+          - fsq_id
+          - name
+          - geocodes
+          - location
+          - categories
+          - chains
+          - related_places
+          - timezone
+          - distance
+          - link
+          - description
+          - tel
+          - fax
+          - email
+          - website
+          - social_media
+          - verified
+          - hours
+          - hours_popular
+          - rating
+          - stats
+          - popularity
+          - price
+          - menu
+          - date_closed
+          - photos
+          - tips
+          - tastes
+          - features
+          - location
+          - geocodes
+        - name: minValues
+          values:
+          - 1
+        - name: maxValues
+          values:
+          - 5
+          objectValues: null
+    - name: min_price
+      in: query
+      weight: 0.5
+      generators:
+      - type: RandomNumber
+        genParameters:
+        - name: type
+          values:
+          - integer
+          objectValues: null
+        - name: min
+          values:
+          - 1
+          objectValues: null
+        - name: max
+          values:
+          - 4
+          objectValues: null
+        valid: true
+    - name: max_price
+      in: query
+      weight: 0.5
+      generators:
+      - type: RandomNumber
+        genParameters:
+        - name: type
+          values:
+          - integer
+          objectValues: null
+        - name: min
+          values:
+          - 1
+          objectValues: null
+        - name: max
+          values:
+          - 4
+          objectValues: null
+        valid: true
+    - name: open_at
+      in: query
+      weight: 0.5
+      generators:
+      - valid: true
+        type: RandomInputValue
+        genParameters:
+        - name: csv
+          values:
+            - "src/test/resources/GatewayExperiment/Foursquare/open_at.csv"
+          objectValues: null
+    - name: open_now
+      in: query
+      weight: 0.5
+      generators:
+      - type: RandomBoolean
+        genParameters: []
+        valid: true
+    - name: ne
+      in: query
+      weight: 0
+      generators:
+      - valid: true
+        type: RandomInputValue
+        genParameters:
+        - name: values
+          values:
+            - 37.42307,-122.08427
+            - 37.392191,-5.995193
+            - 35.681999,139.769254
+            - -33.924278,18.424572
+            - -37.812746,144.961832
+            - 39.925412,32.834169
+            - 50.447273,30.520903
+            - 39.904325,116.405302
+            - 13.753789,100.501572
+            - 19.430849,-99.135857
+            - 47.020917,28.860922
+            - 23.999919,90.418527
+            - -33.301720,-66.335946
+          objectValues: null
+    - name: sw
+      in: query
+      weight: 0
+      generators:
+      - valid: true
+        type: RandomInputValue
+        genParameters:
+        - name: values
+          values:
+            - 37.42307,-122.08427
+            - 37.392191,-5.995193
+            - 35.681999,139.769254
+            - -33.924278,18.424572
+            - -37.812746,144.961832
+            - 39.925412,32.834169
+            - 50.447273,30.520903
+            - 39.904325,116.405302
+            - 13.753789,100.501572
+            - 19.430849,-99.135857
+            - 47.020917,28.860922
+            - 23.999919,90.418527
+            - -33.301720,-66.335946
+          objectValues: null
+    - name: near
+      in: query
+      weight: 0.5
+      generators:
+      - valid: true
+        type: RandomInputValue
+        genParameters:
+        - name: values
+          values:
+          - NYC
+          - Seville, Spain
+          - Milan, Italy
+          - Melbourne
+          - Tokyo
+          - Egypt
+          - Juarez, Mexico
+          - Paris
+          - San Francisco
+          - Krakow
+          - Daca, Bangladesh
+          - Santa Fe
+    - name: sort
+      in: query
+      weight: 0.5
+      generators:
+      - type: RandomInputValue
+        genParameters:
+        - name: values
+          values:
+          - RELEVANCE
+          - RATING
+          - DISTANCE
+          - POPULARITY
+          objectValues: null
+        valid: true
+    - name: limit
+      in: query
+      weight: 0.5
+      generators:
+      - type: RandomNumber
+        genParameters:
+        - name: type
+          values:
+          - integer
+          objectValues: null
+        - name: min
+          values:
+          - 1
+          objectValues: null
+        - name: max
+          values:
+          - 50
+          objectValues: null
+        valid: true
+    - name: session_token
+      in: query
+      weight: 0.5
+      generators:
+      - valid: true
+        type: RandomInputValue
+        genParameters:
+        - name: values
+          values:
+            - fsq3WND+5ku3DYl0DC5zeIk/zwrIPWARCIRdeEjXrAuwXrI=
+          objectValues: null
+    expectedResponse: 200
