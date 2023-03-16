@@ -14,6 +14,10 @@ jobs:
 
       - name: Build Spring Boot application
         run: mvn clean package
+        
+      - name: Install local library
+        run: mvn install:install-file -Dfile=lib/idlreasoner-choco-1.0.0.jar -DgroupId=es.us.isa -DartifactId=idlreasoner-choco -Dversion=1.0.0 -Dpackaging=jar
+
 
       - name: Copy jar file to server
         uses: appleboy/scp-action@master
