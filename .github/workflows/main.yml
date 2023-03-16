@@ -22,7 +22,7 @@ jobs:
           username: ${{ secrets.SERVER_USERNAME }}
           password: ${{ secrets.SERVER_PASSWORD }}
           port: ${{ secrets.SERVER_SSH_PORT }}
-          source: target/myproject.jar
+          source: target/APIGateway-1.0.0.jar
           target: /opt/APIGateway/
 
       - name: Start Spring Boot application
@@ -34,4 +34,4 @@ jobs:
           port: ${{ secrets.SERVER_SSH_PORT }}
           script: |
             cd /opt/APIGateway/
-            nohup java -jar APIGateway.jar > log.txt 2>&1 &
+            nohup java -jar APIGateway-1.0.0.jar > log.txt 2>&1 &
