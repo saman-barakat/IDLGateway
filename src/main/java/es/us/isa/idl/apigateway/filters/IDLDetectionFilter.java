@@ -1,8 +1,9 @@
 package es.us.isa.idl.apigateway.filters;
 
 import es.us.isa.idl.apigateway.util.CSVManager;
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVPrinter;
+import es.us.isa.idlreasonerchoco.analyzer.Analyzer;
+import es.us.isa.idlreasonerchoco.analyzer.OASAnalyzer;
+import es.us.isa.idlreasonerchoco.configuration.IDLException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
@@ -11,30 +12,16 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
 
-import idlanalyzer.analyzer.Analyzer;
-import idlanalyzer.analyzer.OASAnalyzer;
-import idlanalyzer.configuration.IDLException;
+
 import reactor.core.publisher.Mono;
 
-
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Date;
 import java.util.Map;
 
 @Component
 public class IDLDetectionFilter extends AbstractGatewayFilterFactory<IDLDetectionFilter.Config> {
     final Logger logger =
             LoggerFactory.getLogger(IDLDetectionFilter.class);
-
- private String serviceName;
-
 
     public IDLDetectionFilter() { super(Config.class); }
 
@@ -45,24 +32,64 @@ public class IDLDetectionFilter extends AbstractGatewayFilterFactory<IDLDetectio
         return (exchange, chain) -> {
 
             try {
-
                 String serviceName = null;
-            	String SPEC_URL = null;
-            	String operationPath = null;
+            	String SPEC_URL;
+            	String operationPath;
             	String requestPath = exchange.getRequest().getPath().toString();
                 String csvFilePath = "./src/test/resources/GatewayExperiment/ExecutionTime";
+                String operationType = exchange.getRequest().getMethod().name().toLowerCase();
+                Map<String, String> paramMap = exchange.getRequest().getQueryParams().toSingleValueMap();
 
                 if(requestPath.contains("businesses")) {
                     serviceName = "Yelp";
                 	operationPath = "/businesses/search";
-                	SPEC_URL = "./src/test/resources/GatewayExperiment/Yelp/openapi.yaml";
-                    csvFilePath += "/Yelp/IDLDetection.csv";
+                	SPEC_URL = "./src/test/resources/GatewayExperiment/YelpBusinessesSearch/openapi.yaml";
+                    csvFilePath += "/YelpBusinessesSearch/IDLDetection.csv";
+                }
+                else if(requestPath.contains("transactions")) {
+                    serviceName = "Yelp";
+                    operationPath = "/transactions/{transaction_type}/search";
+                    paramMap.put("transaction_type","delivery");
+                    csvFilePath += "/YelpTransactionsSearch/IDLDetection.csv";
+                    SPEC_URL = "./src/test/resources/GatewayExperiment/YelpTransactionsSearch/openapi.yaml";
+                }
+                else if(requestPath.contains("folders")) {
+                    serviceName = "Box";
+                    operationPath = "/folders/{folder_id}/items";
+                    String[] parts = requestPath.split("/");
+                    String value = parts[3];
+                    paramMap.put("folder_id",value);
+                    csvFilePath += "/Box/IDLDetection.csv";
+                    SPEC_URL = "./src/test/resources/GatewayExperiment/Box/openapi.yaml";
+                }
+                else if(requestPath.contains("repos")) {
+                    serviceName = "GitHub";
+                    operationPath = "/user/repos";
+                    SPEC_URL = "./src/test/resources/GatewayExperiment/GitHub/openapi.yaml";
+                    csvFilePath += "/GitHub/IDLDetection.csv";
+                }
+            /*    else if(paramMap.get("apikey").equals("9c07f6df")) {
+                    serviceName = "OMDb";
+                    operationPath = "/";
+                    paramMap.remove("apikey");
+                    csvFilePath += "/OMDb/IDLDetection.csv";
+                    SPEC_URL = "./src/test/resources/GatewayExperiment/OMDb/swagger_byIdOrTitle.yaml";
+                }*/
+                else if(requestPath.contains("places")) {
+                    serviceName = "FSQ";
+                    operationPath = "/places/search";
+                    SPEC_URL = "./src/test/resources/GatewayExperiment/Foursquare/openapi.yaml";
+                    csvFilePath += "/FSQ/IDLDetection.csv";
                 }
                 else if(requestPath.contains("flight-offers")) {
+                    serviceName = "AmadeusFlight";
+                    csvFilePath += "/AmadeusFlight/IDLDetection.csv";
                 	operationPath = "/shopping/flight-offers";
-                	SPEC_URL = "./src/test/resources/GatewayExperiment/AmadeusFlight/swagger.yaml";
+                	SPEC_URL = "./src/test/resources/GatewayExperiment/AmadeusFlight/openapi.yaml";
                 }
                 else if(requestPath.contains("hotel-offers")) {
+                    serviceName = "AmadeusHotel";
+                    csvFilePath += "/AmadeusHotel/IDLDetection.csv";
                 	operationPath = "/shopping/hotel-offers";
                 	SPEC_URL = "./src/test/resources/GatewayExperiment/AmadeusHotel/swagger.yaml";
                 }
@@ -70,31 +97,33 @@ public class IDLDetectionFilter extends AbstractGatewayFilterFactory<IDLDetectio
                 	operationPath = "/v1/public/comics/{comicId}";
                 	SPEC_URL = "./src/test/resources/GatewayExperiment/Marvel/swagger_getComicById.yaml";
                 }
-                else if(requestPath.contains("omdbapi")) {
-                	operationPath = "/";
-                	SPEC_URL = "./src/test/resources/GatewayExperiment/OMDb/swagger_byIdOrTitle.yaml";
-                }
                 else if(requestPath.contains("youtube")) {
                 	operationPath = "/youtube/v3/videos";
                 	SPEC_URL = "./src/test/resources/GatewayExperiment/YouTube/openapi.yaml";
                 }
                 else if(requestPath.contains("address")) {
+                    serviceName = "DHL";
+                    csvFilePath += "/DHL/IDLDetection.csv";
                     operationPath = "/find-by-address";
                     SPEC_URL = "./src/test/resources/GatewayExperiment/DHL/openapi.yaml";
+                }
+                else if(requestPath.contains("blog")) {
+                    serviceName = "Tumblr";
+                    operationPath = "/blog/{blog-identifier}/likes";
+                    paramMap.remove("api_key");
+                    paramMap.put("blog-identifier","reasonerapigateway.tumblr.com");
+                    csvFilePath += "/Tumblr/IDLDetection.csv";
+                    SPEC_URL = "./src/test/resources/GatewayExperiment/Tumblr/swagger.yaml";
                 }
                 else {
                 	throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Path did not match!");
                 }
 
-                String operationType = exchange.getRequest().getMethodValue().toLowerCase();
-                Map<String, String> paramMap = exchange.getRequest().getQueryParams().toSingleValueMap();
-
                 CSVManager csvManager = new CSVManager(csvFilePath, serviceName,operationPath,paramMap.toString());
 
                 Long startTime = System.nanoTime();
 
-                Analyzer analyzer = null;
-                analyzer = new OASAnalyzer("oas", SPEC_URL, operationPath, operationType, false);
+                Analyzer analyzer = new OASAnalyzer(SPEC_URL, operationPath, operationType);
                 boolean valid = analyzer.isValidRequest(paramMap);
 
                 if (!valid) {
@@ -117,7 +146,7 @@ public class IDLDetectionFilter extends AbstractGatewayFilterFactory<IDLDetectio
 
                 }));
 
-            } catch (IDLException | IOException e) {
+            } catch (IOException | IDLException e) {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
             }
         };

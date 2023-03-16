@@ -53,8 +53,8 @@ paths:
         - $ref: '#/components/parameters/radius'
         - $ref: '#/components/parameters/limit'
         - $ref: '#/components/parameters/hideClosedLocations'
-      x-dependencies:
-        - Or(addressLocality, postalCode);
+ #     x-dependencies:
+ #       - Or(addressLocality, postalCode);
       responses:
         "200":
           description: OK

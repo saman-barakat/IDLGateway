@@ -50,7 +50,8 @@ paths:
           in: query
           description: Year of release
           required: false
-          type: integer
+          type: string
+          format: date
         - name: plot
           in: query
           description: Return short or full plot
@@ -66,18 +67,17 @@ paths:
           type: string
           enum:
             - json
-#            - xml
       x-dependencies:
-        - OnlyOne(i, t);
+        - Or(i, t);
       responses:
         '200':
           description: Successful operation
-          schema:
-            $ref: "#/definitions/Response"
-        '401':
-          description: Not authenticated
-          schema:
-            $ref: "#/definitions/Error"
+#          schema:
+  #          $ref: "#/definitions/Response"
+        '400':
+          description: Bad request
+  #        schema:
+    #        $ref: "#/definitions/Error"
 #      security:
 #        - APIKeyQueryParam: []
 definitions:

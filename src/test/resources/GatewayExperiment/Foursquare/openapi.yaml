@@ -138,10 +138,8 @@ paths:
             type: string
       x-dependencies:
         - ZeroOrOne(ll, near, sw);
-        #- AllOrNone(ll, radius);
-        # - AllOrNone(sw, ne);
-        - IF exclude_all_chains == true THEN NOT chains AND NOT exclude_chains);
-        - ZeroOrOne(chain, exclude_chains);
+        - IF radius THEN NOT near;
+        - ZeroOrOne(chains, exclude_chains);
         - ZeroOrOne(open_now, open_at);
         - IF min_price AND max_price THEN min_price <= max_price;
         - IF (chains OR exclude_chains) AND exclude_all_chains THEN exclude_all_chains == false;
@@ -151,7 +149,8 @@ paths:
         "400":
           description: Bad request
 servers:
-  - url: https://api.foursquare.com/v3
+  #- url: https://api.foursquare.com/v3
+  - url: http://localhost:8080/v3
 components:
   schemas:
     Venue:

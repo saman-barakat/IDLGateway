@@ -1,0 +1,57 @@
+openapi: 3.0.0
+info:
+  title: Yelp V3
+  description: Yelp's Fusion API allows you to get the best local business information
+    and user reviews of over million businesses in 32 countries
+  version: 1.0.0
+  contact:
+    name: Fusion support
+    url: https://github.com/Yelp/yelp-fusion/issues
+    email: api@yelp.com
+  license:
+    name: Terms of use
+    url: https://www.yelp.com/developers/api_terms
+servers:
+  # - url: https://api.yelp.com/v3
+   - url: http://localhost:8080/v3
+paths:
+  "/transactions/{transaction_type}/search":
+    get:
+      operationId: getTransactions
+      summary: Get transactions
+      description: Get transactions
+      parameters:
+        - name: transaction_type
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: location
+          in: query
+          required: false
+          description: "Required when latitude and longitude aren't provided. Address of the location you want to deliver to."
+          schema:
+            type: string
+        - name: latitude
+          in: query
+          description: Required if location is not provided. Latitude of the location
+            you want to search nearby.
+          schema:
+            type: number
+            minimum: -90
+            maximum: 90
+        - name: longitude
+          in: query
+          description: Required if location is not provided. Longitude of the location
+            you want to search nearby.
+          schema:
+            type: number
+            minimum: -180
+            maximum: 180
+      x-dependencies:
+        - Or(location, latitude AND longitude);
+      responses:
+        200:
+          description: Returns all businesses
+        400:
+          description: bad request
