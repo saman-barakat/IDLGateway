@@ -12,6 +12,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Check if jar file exists
+        run: ls target/APIGateway-1.0.0.jar
+        
       - name: Build Spring Boot application
         run: mvn clean package
         
