@@ -3,7 +3,7 @@ name: Deploy to Server
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   deploy:
@@ -12,9 +12,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Install local library
+        run: mvn install:install-file -Dfile=lib/idlreasoner-choco-1.0.0.jar -DgroupId=es.us.isa -DartifactId=idlreasoner-choco -Dversion=1.0.0 -Dpackaging=jar
+
       - name: Build Spring Boot application
         run: mvn clean package
-
+        
       - name: Copy jar file to server
         uses: appleboy/scp-action@master
         with:
@@ -22,7 +25,7 @@ jobs:
           username: ${{ secrets.SERVER_USERNAME }}
           password: ${{ secrets.SERVER_PASSWORD }}
           port: ${{ secrets.SERVER_SSH_PORT }}
-          source: target/myproject.jar
+          source: target/APIGateway-1.0.0.jar
           target: /opt/APIGateway/
 
       - name: Start Spring Boot application
@@ -34,4 +37,4 @@ jobs:
           port: ${{ secrets.SERVER_SSH_PORT }}
           script: |
             cd /opt/APIGateway/
-            nohup java -jar APIGateway.jar > log.txt 2>&1 &
+            nohup java -jar APIGateway-1.0.0.jar > log.txt 2>&1 &
