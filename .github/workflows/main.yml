@@ -12,9 +12,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Install local library
-        run: mvn install:install-file -Dfile=lib/idlreasoner-choco-1.0.0.jar -DgroupId=es.us.isa -DartifactId=idlreasoner-choco -Dversion=1.0.0 -Dpackaging=jar
-
       - name: Build Spring Boot application
         run: mvn clean package
         
