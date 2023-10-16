@@ -132,7 +132,7 @@ public class IDLFilter extends AbstractGatewayFilterFactory<IDLFilter.Config> {
 
             try {
                 double analysisTime;
-                Long analysisStartTime = System.nanoTime();
+             //   Long analysisStartTime = System.nanoTime();
 
                 if (config.analysis.equals("Detection") || config.analysis.equals("Explanation")) {
 
@@ -150,9 +150,9 @@ public class IDLFilter extends AbstractGatewayFilterFactory<IDLFilter.Config> {
 
                     Long analysisEndTime = System.nanoTime();
 
-                    analysisTime = (analysisEndTime - analysisStartTime)/ 1000000.0;
+                    analysisTime = (analysisEndTime - startTime)/ 1000000.0;
 
-                    double totalTime = (analysisEndTime - startTime)/ 1000000.0;
+                    double totalTime = analysisTime;
 
                     csvManager.writeRow(
                             HttpStatus.BAD_REQUEST.toString(),
@@ -163,7 +163,7 @@ public class IDLFilter extends AbstractGatewayFilterFactory<IDLFilter.Config> {
                 }
                 else {
                     Long analysisEndTime = System.nanoTime();
-                    analysisTime = (analysisEndTime - analysisStartTime)/ 1000000.0;
+                    analysisTime = (analysisEndTime - startTime)/ 1000000.0;
                 }
             }else {
                 analysisTime = 0.0;
