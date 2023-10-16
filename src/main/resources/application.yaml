@@ -1,91 +1,60 @@
 spring:
   cloud:
     gateway:
+     # default-filters:
+      #  - name: IDLFilter
+      #    args:
+            #analysis: Detection
+        #    analysis: Explanation
+            #analysis: None
       routes:
         - id: YelpAPI
           uri: https://api.yelp.com
           predicates:
-              - Path=/v3/businesses/**
+            - Path=/v3/businesses/**
           filters:
-          #  - NoDetectionFilter
-          #  - IDLDetectionFilter
-            - IDLDetectionAndExplanationFilter
+            - name: IDLFilter
+              args:
+                #analysis: Detection
+                #analysis: Explanation
+                analysis: None
         - id: YelpTransactionsAPI
           uri: https://api.yelp.com
           predicates:
             - Path=/v3/transactions/**
-          filters:
-            - NoDetectionFilter
-          #  - IDLDetectionFilter
-          #  - IDLDetectionAndExplanationFilter
         - id: BoxFoldersAPI
           uri: https://api.box.com
           predicates:
             - Path=/2.0/**
-          filters:
-          #  - NoDetectionFilter
-          #  - IDLDetectionFilter
-            - IDLDetectionAndExplanationFilter
         - id: GitHubAPI
           uri: https://api.github.com
           predicates:
             - Path=/user/**
-          filters:
-          #  - NoDetectionFilter
-          #  - IDLDetectionFilter
-            - IDLDetectionAndExplanationFilter
         - id: AmadeusFlightAPI
           uri: https://test.api.amadeus.com
           predicates:
             - Path=/v2/shopping/**
-          filters:
-            - NoDetectionFilter
-          #  - IDLDetectionFilter
-          #  - IDLDetectionAndExplanationFilter
         - id: AmadeusHotelAPI
           uri: https://test.api.amadeus.com
           predicates:
             - Path=/v3/shopping/**
-          filters:
-          #  - NoDetectionFilter
-          #  - IDLDetectionFilter
-            - IDLDetectionAndExplanationFilter
         - id: YoutubeAPI
           uri: https://youtube.googleapis.com
           predicates:
             - Path=/youtube/**
-          #filters:
-             # - IDLDetectionFilter
-             # - IDLDetectionAndExplanationFilter
         - id: DHLAPI
           uri: https://api.dhl.com
           predicates:
             - Path=/location-finder/v1/**
-          filters:
-            - NoDetectionFilter
-           # - IDLDetectionFilter
-            #- IDLDetectionAndExplanationFilter
         - id: FSQAPI
           uri: https://api.foursquare.com
           predicates:
             - Path=/v3/places/**
-          filters:
-          #  - NoDetectionFilter
-          #  - IDLDetectionFilter
-            - IDLDetectionAndExplanationFilter
         - id: TumblrAPI
           uri: https://api.tumblr.com
           predicates:
             - Path=/v2/blog/**
-          filters:
-          #  - NoDetectionFilter
-          #  - IDLDetectionFilter
-            - IDLDetectionAndExplanationFilter
         #- id: OMDbAPI
         #  uri: http://omdbapi.com
         #  predicates:
         #    - Path=/
-        #  filters:
-          #  - NoDetectionFilter
-          #  - IDLDetectionFilter
-        #    - IDLDetectionAndExplanationFilter

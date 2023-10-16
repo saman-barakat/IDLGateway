@@ -8,47 +8,45 @@ import org.apache.logging.log4j.Logger;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 
 public class CSVManager {
 
-	private static final Logger logger = LogManager.getLogger(CSVManager.class.getName());
-	private static String csvFilePath;
-	private static String serviceName;
-	private static String operationPath;
-	private static String params;
 
-	static String[] Header = {"Service", "Operation", "RequestParams", "StartTime", "DurationMS", "Status"};
+	private static final Logger logger = LogManager.getLogger(CSVManager.class.getName());
+	static String[] Header = {"API", "Operation", "RequestParams", "ResponseStatus","DateAndTime", "IDLFilterMode", "AnalysisTime","ServerResponseTime","TotalTime"};
+
+	private final String csvFilePath;
+	private final String serviceName;
+	private final String operationPath;
+	private final String params;
+
+	private final String dateAndTime;
 
 	public CSVManager(String csvFilePath, String serviceName, String operationPath, String params) {
 		this.csvFilePath = csvFilePath;
 		this.serviceName = serviceName;
 		this.operationPath = operationPath;
 		this.params = params;
+		//set current date and time
+		this.dateAndTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
 	}
 
-
-// create a method to write a row
-	public static void writeRow(double durationMS, String status) throws IOException {
-
+	public void writeRow(String status, String analysis, double analysisTime, double serverResponseTime, double totalTime) {
 		File file = new File(csvFilePath);
-
-		FileWriter fileWriter = new FileWriter(file, true);
-
-		CSVPrinter csvPrinter = null;
-		// check file size
-
-		if(file.exists() && file.length() != 0) {
-			csvPrinter = new CSVPrinter(fileWriter, CSVFormat.EXCEL);
-		}else{
-			csvPrinter = new CSVPrinter(fileWriter, CSVFormat.EXCEL
-					.withHeader(Header));
+		try (
+				FileWriter fileWriter = new FileWriter(file, true);
+				CSVPrinter csvPrinter = file.exists() && file.length() > 0
+						? new CSVPrinter(fileWriter, CSVFormat.EXCEL)
+						: new CSVPrinter(fileWriter, CSVFormat.EXCEL.withHeader(Header))
+		)
+		 {
+			csvPrinter.printRecord(serviceName, operationPath, params, status, dateAndTime, analysis, analysisTime, serverResponseTime, totalTime);
+			csvPrinter.flush();
+		} catch (IOException e) {
+			logger.error("Failed to write to CSV file", e);
 		}
-
-		csvPrinter.printRecord(serviceName, operationPath, params, new Date(), durationMS, status);
-
-		csvPrinter.flush();
-		csvPrinter.close();
-}
+	}
 }
