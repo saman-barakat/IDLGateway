@@ -16,12 +16,22 @@ spring:
             - name: IDLFilter
               args:
                 #analysis: Detection
-                #analysis: Explanation
-                analysis: None
+                analysis: Explanation
+                #analysis: None
         - id: YelpTransactionsAPI
           uri: https://api.yelp.com
           predicates:
             - Path=/v3/transactions/**
+        - id: SpoonacularAPIRecipesComplexSearch
+          uri: https://api.spoonacular.com
+          predicates:
+            - Path=/recipes/**
+          filters:
+            - name: IDLFilter
+              args:
+                analysis: Detection
+                #analysis: Explanation
+                #analysis: None
         - id: BoxFoldersAPI
           uri: https://api.box.com
           predicates:
@@ -58,3 +68,6 @@ spring:
         #  uri: http://omdbapi.com
         #  predicates:
         #    - Path=/
+app:
+  RequestType: ValidRequests
+  #RequestType: InvalidRequests

@@ -6,6 +6,7 @@ import es.us.isa.idlreasonerchoco.analyzer.OASAnalyzer;
 import es.us.isa.idlreasonerchoco.configuration.IDLException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.http.HttpStatus;
@@ -27,6 +28,8 @@ public class IDLFilter extends AbstractGatewayFilterFactory<IDLFilter.Config> {
         logger.info("IDLFilter constructor");
     }
 
+    @Value("${app.RequestType}")
+    private String RequestType;
     private static final String BASE_SPEC_PATH = "./src/test/resources/GatewayExperiment";
     private static final String BASE_CSV_PATH = "./src/test/resources/GatewayExperiment/Performance";
 
@@ -55,14 +58,21 @@ public class IDLFilter extends AbstractGatewayFilterFactory<IDLFilter.Config> {
                 serviceName = "Yelp";
                 operationPath = "/businesses/search";
                 SPEC_URL = BASE_SPEC_PATH + "/YelpBusinessesSearch/openapi.yaml";
-                csvFilePath = BASE_CSV_PATH + "/YelpBusinessesSearch.csv";
+                csvFilePath = BASE_CSV_PATH + "/"+ RequestType +"/YelpBusinessesSearch/YelpBusinessesSearch" + config.analysis + ".csv";
             }
             else if(requestPath.contains("transactions")) {
                 serviceName = "Yelp";
                 operationPath = "/transactions/{transaction_type}/search";
                 paramMap.put("transaction_type","delivery");
                 SPEC_URL = BASE_SPEC_PATH + "/YelpTransactionsSearch/openapi.yaml";
-                csvFilePath = BASE_CSV_PATH + "/YelpTransactionsSearch.csv";
+                csvFilePath = BASE_CSV_PATH + "YelpTransactionsSearch/YelpTransactionsSearch" + config.analysis + ".csv";
+            }
+            else if(requestPath.contains("complexSearch")) {
+                serviceName = "Spoonacular";
+                operationPath = "/recipes/complexSearch";
+
+                SPEC_URL = BASE_SPEC_PATH + "/Spoonacular/openapi.yaml";
+                csvFilePath = BASE_CSV_PATH + "/Spoonacular.csv";
             }
             else if(requestPath.contains("folders")) {
                 serviceName = "Box";
@@ -152,12 +162,7 @@ public class IDLFilter extends AbstractGatewayFilterFactory<IDLFilter.Config> {
 
                     analysisTime = (analysisEndTime - startTime)/ 1000000.0;
 
-                    double totalTime = analysisTime;
-
-                    csvManager.writeRow(
-                            HttpStatus.BAD_REQUEST.toString(),
-                            config.analysis, analysisTime,
-                            0.0,totalTime);
+                    csvManager.writeRow(HttpStatus.BAD_REQUEST.toString(), config.analysis, analysisTime,0.0);
 
                     throw new ResponseStatusException(HttpStatus.BAD_REQUEST, responseMessage);
                 }
@@ -179,8 +184,7 @@ public class IDLFilter extends AbstractGatewayFilterFactory<IDLFilter.Config> {
 
                     double totalTime = (serverResponseEndTime - startTime)/ 1000000.0;
 
-                    csvManager.writeRow(exchange.getResponse().getStatusCode().toString(),
-                            config.analysis,analysisTime,serverResponseTime,totalTime);
+                    csvManager.writeRow(exchange.getResponse().getStatusCode().toString(), config.analysis, analysisTime,serverResponseTime);
 
                 }));
 

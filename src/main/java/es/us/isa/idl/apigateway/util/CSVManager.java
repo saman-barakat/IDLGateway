@@ -16,7 +16,7 @@ public class CSVManager {
 
 
 	private static final Logger logger = LogManager.getLogger(CSVManager.class.getName());
-	static String[] Header = {"API", "Operation", "RequestParams", "ResponseStatus","DateAndTime", "IDLFilterMode", "AnalysisTime","ServerResponseTime","TotalTime"};
+	static String[] Header = {"API", "Operation", "RequestParams", "ResponseStatus","DateAndTime", "IDLFilterMode", "AnalysisTime","ServerResponseTime"};
 
 	private final String csvFilePath;
 	private final String serviceName;
@@ -34,7 +34,7 @@ public class CSVManager {
 		this.dateAndTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
 	}
 
-	public void writeRow(String status, String analysis, double analysisTime, double serverResponseTime, double totalTime) {
+	public void writeRow(String status, String analysis, double analysisTime, double serverResponseTime) {
 		File file = new File(csvFilePath);
 		try (
 				FileWriter fileWriter = new FileWriter(file, true);
@@ -43,7 +43,7 @@ public class CSVManager {
 						: new CSVPrinter(fileWriter, CSVFormat.EXCEL.withHeader(Header))
 		)
 		 {
-			csvPrinter.printRecord(serviceName, operationPath, params, status, dateAndTime, analysis, analysisTime, serverResponseTime, totalTime);
+			csvPrinter.printRecord(serviceName, operationPath, params, status, dateAndTime, analysis, analysisTime, serverResponseTime);
 			csvPrinter.flush();
 		} catch (IOException e) {
 			logger.error("Failed to write to CSV file", e);
