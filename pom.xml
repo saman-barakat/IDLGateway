@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>es.us.isa.idl</groupId>
-	<artifactId>APIGateway</artifactId>
+	<artifactId>IDLGateway</artifactId>
 	<version>1.0.0</version>
-	<name>APIGateway</name>
+	<name>IDLGateway</name>
 	<description>This project implements IDL Gateway.</description>
 	<properties>
 		<java.version>11</java.version>
