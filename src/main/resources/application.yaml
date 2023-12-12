@@ -16,8 +16,13 @@ spring:
             - name: IDLFilter
               args:
                 #analysis: Detection
-                analysis: Explanation
-                #analysis: None
+                #analysis: Explanation
+                analysis: None
+                serviceName: "Yelp"
+                operationPath: "/businesses/search"
+                SPECPath: "/YelpBusinessesSearch/openapi.yaml"
+                #csvPath: "/YelpBusinessesSearch/ValidRequests/YelpBusinessesSearch.csv"
+                csvPath: "/YelpBusinessesSearch/ValidRequests/YelpBusinessesSearch.csv"
         - id: YelpTransactionsAPI
           uri: https://api.yelp.com
           predicates:
@@ -69,5 +74,5 @@ spring:
         #  predicates:
         #    - Path=/
 app:
-  RequestType: ValidRequests
-  #RequestType: InvalidRequests
+  RequestMode: ValidRequests
+  #RequestMode: InvalidRequests
