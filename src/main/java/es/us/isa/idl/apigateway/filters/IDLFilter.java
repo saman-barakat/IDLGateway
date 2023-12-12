@@ -48,11 +48,6 @@ public class IDLFilter extends AbstractGatewayFilterFactory<IDLFilter.Config> {
             String operationType = exchange.getRequest().getMethod().name().toLowerCase();
             Map<String, String> paramMap = exchange.getRequest().getQueryParams().toSingleValueMap();
 
-System.out.println("SPEC_URL: " + SPEC_URL);
-System.out.println("operationPath: " + operationPath);
-System.out.println("operationType: " + operationType);
-System.out.println("paramMap: " + paramMap.toString());
-
             CSVManager csvManager = new CSVManager(csvFilePath, serviceName,operationPath,paramMap.toString());
 
             try {
