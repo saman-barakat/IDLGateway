@@ -16,13 +16,14 @@ public class CSVManager {
 
 
 	private static final Logger logger = LogManager.getLogger(CSVManager.class.getName());
-	static String[] Header = {"API", "Operation", "RequestParams", "ResponseStatus","DateAndTime", "IDLFilterMode", "AnalysisTime","ServerResponseTime"};
+	static String[] Header = {"API", "Operation", "RequestParams", "ResponseStatus","DateAndTime", "DependencyFilterMode", "AnalysisTime","ServerResponseTime"};
 
 	private final String csvFilePath;
 	private final String serviceName;
 	private final String operationPath;
 	private final String params;
-
+	// private final String requestID;
+	//private final String errorMessage;
 	private final String dateAndTime;
 
 	public CSVManager(String csvFilePath, String serviceName, String operationPath, String params) {
@@ -30,6 +31,7 @@ public class CSVManager {
 		this.serviceName = serviceName;
 		this.operationPath = operationPath;
 		this.params = params;
+		//this.requestID = requestID;
 		//set current date and time
 		this.dateAndTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
 	}

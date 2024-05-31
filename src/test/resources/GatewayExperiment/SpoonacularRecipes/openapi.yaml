@@ -1,0 +1,658 @@
+openapi: 3.0.0
+info:
+  title: Spoonacular API
+  version: 1.0.0
+servers:
+  #- url: https://api.spoonacular.com
+  - url: http://localhost:8080
+paths:
+  /recipes/complexSearch:
+    get:
+      summary: Search Recipes Complex
+      operationId: searchRecipesComplex
+      parameters:
+        - name: query
+          in: query
+          description: The (natural language) recipe search query.
+          required: false
+          schema:
+            type: string
+        - name: cuisine
+          in: query
+          description: The cuisine(s) of the recipes. One or more, comma separated.
+          required: false
+          schema:
+            type: string
+        - name: excludeCuisine
+          in: query
+          description: The cuisine(s) the recipes must not match. One or more, comma separated.
+          required: false
+          schema:
+            type: string
+        - name: diet
+          in: query
+          description: The diet(s) for which the recipes must be suitable.
+          required: false
+          schema:
+            type: string
+        - name: intolerances
+          in: query
+          description: A comma-separated list of intolerances.
+          required: false
+          schema:
+            type: string
+        - name: equipment
+          in: query
+          description: The equipment required.
+          required: false
+          schema:
+            type: string
+        - name: includeIngredients
+          in: query
+          description: A comma-separated list of ingredients that should/must be used in the recipes.
+          required: false
+          schema:
+            type: string
+        - name: excludeIngredients
+          in: query
+          description: A comma-separated list of ingredients or ingredient types that the recipes must not contain.
+          required: false
+          schema:
+            type: string
+        - name: type
+          in: query
+          description: The type of recipe.
+          required: false
+          schema:
+            type: string
+        - name: instructionsRequired
+          in: query
+          description: Whether the recipes must have instructions.
+          required: false
+          schema:
+            type: boolean
+        - name: fillIngredients
+          in: query
+          description: Add information about the ingredients and whether they are used or missing in relation to the query.
+          required: false
+          schema:
+            type: boolean
+        - name: addRecipeInformation
+          in: query
+          description: If set to true, you get more information about the recipes returned.
+          required: false
+          schema:
+            type: boolean
+        - name: addRecipeNutrition
+          in: query
+          description: If set to true, you get nutritional information about each recipes returned.
+          required: false
+          schema:
+            type: boolean
+        - name: author
+          in: query
+          description: The username of the recipe author.
+          required: false
+          schema:
+            type: string
+        - name: tags
+          in: query
+          description: User defined tags that have to match.
+          required: false
+          schema:
+            type: string
+        - name: recipeBoxId
+          in: query
+          description: The id of the recipe box to which the search should be limited to.
+          required: false
+          schema:
+            type: number
+        - name: titleMatch
+          in: query
+          description: Enter text that must be found in the title of the recipes.
+          required: false
+          schema:
+            type: string
+        - name: maxReadyTime
+          in: query
+          description: The maximum time in minutes it should take to prepare and cook the recipe.
+          required: false
+          schema:
+            type: number
+        - name: ignorePantry
+          in: query
+          description: Whether to ignore typical pantry items, such as water, salt, flour, etc.
+          required: false
+          schema:
+            type: boolean
+        - name: sort
+          in: query
+          description: The strategy to sort recipes by.
+          required: false
+          schema:
+            type: string
+        - name: sortDirection
+          in: query
+          description: The direction in which to sort. Must be either 'asc' (ascending) or 'desc' (descending).
+          required: false
+          schema:
+            type: string
+        - name: minCarbs
+          in: query
+          description: The minimum amount of carbohydrates the recipes must have.
+          required: false
+          schema:
+            type: number
+        - name: maxCarbs
+          in: query
+          description: The maximum amount of carbohydrates the recipes can have.
+          required: false
+          schema:
+            type: number
+        - name: minProtein
+          in: query
+          description: The minimum amount of protein the recipes must have.
+          required: false
+          schema:
+            type: number
+        - name: maxProtein
+          in: query
+          description: The maximum amount of protein the recipes can have.
+          required: false
+          schema:
+            type: number
+        - name: minCalories
+          in: query
+          description: The minimum amount of calories the recipes must have.
+          required: false
+          schema:
+            type: number
+        - name: maxCalories
+          in: query
+          description: The maximum amount of calories the recipes can have.
+          required: false
+          schema:
+            type: number
+        - name: minFat
+          in: query
+          description: The minimum amount of fat the recipes must have.
+          required: false
+          schema:
+            type: number
+        - name: maxFat
+          in: query
+          description: The maximum amount of fat the recipes can have.
+          required: false
+          schema:
+            type: number
+        - name: minAlcohol
+          in: query
+          description: The minimum amount of alcohol the recipes must have (in grams).
+          required: false
+          schema:
+            type: number
+        - name: maxAlcohol
+          in: query
+          description: The maximum amount of alcohol the recipes can have (in grams).
+          required: false
+          schema:
+            type: number
+        - name: minCaffeine
+          in: query
+          description: The minimum amount of caffeine the recipes must have.
+          required: false
+          schema:
+            type: number
+        - name: maxCaffeine
+          in: query
+          description: The maximum amount of caffeine the recipes can have.
+          required: false
+          schema:
+            type: number
+        - name: minCopper
+          in: query
+          description: The minimum amount of copper the recipes must have.
+          required: false
+          schema:
+            type: number
+        - name: maxCopper
+          in: query
+          description: The maximum amount of copper the recipes can have.
+          required: false
+          schema:
+            type: number
+        - name: minCalcium
+          in: query
+          description: The minimum amount of calcium the recipes must have.
+          required: false
+          schema:
+            type: number
+        - name: maxCalcium
+          in: query
+          description: The maximum amount of calcium the recipes can have.
+          required: false
+          schema:
+            type: number
+        - name: minCholine
+          in: query
+          description: The minimum amount of choline the recipes must have.
+          required: false
+          schema:
+            type: number
+        - name: maxCholine
+          in: query
+          description: The maximum amount of choline the recipes can have.
+          required: false
+          schema:
+            type: number
+        - name: minCholesterol
+          in: query
+          description: The minimum amount of cholesterol the recipes must have.
+          required: false
+          schema:
+            type: number
+        - name: maxCholesterol
+          in: query
+          description: The maximum amount of cholesterol the recipes can have.
+          required: false
+          schema:
+            type: number
+        - name: minFluoride
+          in: query
+          description: The minimum amount of fluoride the recipes must have.
+          required: false
+          schema:
+            type: number
+        - name: maxFluoride
+          in: query
+          description: The maximum amount of fluoride the recipes can have.
+          required: false
+          schema:
+            type: number
+        - name: minSaturatedFat
+          in: query
+          description: The minimum amount of saturated fat the recipes must have.
+          required: false
+          schema:
+            type: number
+        - name: maxSaturatedFat
+          in: query
+          description: The maximum amount of saturated fat the recipes can have.
+          required: false
+          schema:
+            type: number
+        - name: minVitaminA
+          in: query
+          description: The minimum amount of vitamin A the recipes must have.
+          required: false
+          schema:
+            type: number
+        - name: maxVitaminA
+          in: query
+          description: The maximum amount of vitamin A the recipes can have.
+          required: false
+          schema:
+            type: number
+        - name: minVitaminC
+          in: query
+          description: The minimum amount of vitamin C the recipes must have.
+          required: false
+          schema:
+            type: number
+        - name: maxVitaminC
+          in: query
+          description: The maximum amount of vitamin C the recipes can have.
+          required: false
+          schema:
+            type: number
+        - name: minVitaminD
+          in: query
+          description: The minimum amount of vitamin D the recipes must have.
+          required: false
+          schema:
+            type: number
+        - name: maxVitaminD
+          in: query
+          description: The maximum amount of vitamin D the recipes can have.
+          required: false
+          schema:
+            type: number
+        - name: minVitaminE
+          in: query
+          description: The minimum amount of vitamin E the recipes must have.
+          required: false
+          schema:
+            type: number
+        - name: maxVitaminE
+          in: query
+          description: The maximum amount of vitamin E the recipes can have.
+          required: false
+          schema:
+            type: number
+        - name: minVitaminK
+          in: query
+          description: The minimum amount of vitamin K the recipes must have.
+          required: false
+          schema:
+            type: number
+        - name: maxVitaminK
+          in: query
+          description: The maximum amount of vitamin K the recipes can have.
+          required: false
+          schema:
+            type: number
+        - name: minVitaminB1
+          in: query
+          description: The minimum amount of vitamin B1 (thiamine) the recipes must have.
+          required: false
+          schema:
+            type: number
+        - name: maxVitaminB1
+          in: query
+          description: The maximum amount of vitamin B1 (thiamine) the recipes can have.
+          required: false
+          schema:
+            type: number
+        - name: minVitaminB2
+          in: query
+          description: The minimum amount of vitamin B2 (riboflavin) the recipes must have.
+          required: false
+          schema:
+            type: number
+        - name: maxVitaminB2
+          in: query
+          description: The maximum amount of vitamin B2 (riboflavin) the recipes can have.
+          required: false
+          schema:
+            type: number
+        - name: minVitaminB5
+          in: query
+          description: The minimum amount of vitamin B5 (pantothenic acid) the recipes must have.
+          required: false
+          schema:
+            type: number
+        - name: maxVitaminB5
+          in: query
+          description: The maximum amount of vitamin B5 (pantothenic acid) the recipes can have.
+          required: false
+          schema:
+            type: number
+        - name: minVitaminB3
+          in: query
+          description: The minimum amount of vitamin B3 (niacin) the recipes must have.
+          required: false
+          schema:
+            type: number
+        - name: maxVitaminB3
+          in: query
+          description: The maximum amount of vitamin B3 (niacin) the recipes can have.
+          required: false
+          schema:
+            type: number
+        - name: minVitaminB6
+          in: query
+          description: The minimum amount of vitamin B6 the recipes must have.
+          required: false
+          schema:
+            type: number
+        - name: maxVitaminB6
+          in: query
+          description: The maximum amount of vitamin B6 the recipes can have.
+          required: false
+          schema:
+            type: number
+        - name: minVitaminB12
+          in: query
+          description: The minimum amount of vitamin B12 the recipes must have.
+          required: false
+          schema:
+            type: number
+        - name: maxVitaminB12
+          in: query
+          description: The maximum amount of vitamin B12 the recipes can have.
+          required: false
+          schema:
+            type: number
+        - name: minFiber
+          in: query
+          description: The minimum amount of fiber the recipes must have.
+          required: false
+          schema:
+            type: number
+        - name: maxFiber
+          in: query
+          description: The maximum amount of fiber the recipes can have.
+          required: false
+          schema:
+            type: number
+        - name: minFolate
+          in: query
+          description: The minimum amount of folate the recipes must have.
+          required: false
+          schema:
+            type: number
+        - name: maxFolate
+          in: query
+          description: The maximum amount of folate the recipes can have.
+          required: false
+          schema:
+            type: number
+        - name: minFolicAcid
+          in: query
+          description: The minimum amount of folic acid the recipes must have.
+          required: false
+          schema:
+            type: number
+        - name: maxFolicAcid
+          in: query
+          description: The maximum amount of folic acid the recipes can have.
+          required: false
+          schema:
+            type: number
+        - name: minIodine
+          in: query
+          description: The minimum amount of iodine the recipes must have.
+          required: false
+          schema:
+            type: number
+        - name: maxIodine
+          in: query
+          description: The maximum amount of iodine the recipes can have.
+          required: false
+          schema:
+            type: number
+        - name: minIron
+          in: query
+          description: The minimum amount of iron the recipes must have.
+          required: false
+          schema:
+            type: number
+        - name: maxIron
+          in: query
+          description: The maximum amount of iron the recipes can have.
+          required: false
+          schema:
+            type: number
+        - name: minMagnesium
+          in: query
+          description: The minimum amount of magnesium the recipes must have.
+          required: false
+          schema:
+            type: number
+        - name: maxMagnesium
+          in: query
+          description: The maximum amount of magnesium the recipes can have.
+          required: false
+          schema:
+            type: number
+        - name: minManganese
+          in: query
+          description: The minimum amount of manganese the recipes must have.
+          required: false
+          schema:
+            type: number
+        - name: maxManganese
+          in: query
+          description: The maximum amount of manganese the recipes can have.
+          required: false
+          schema:
+            type: number
+        - name: minPhosphorus
+          in: query
+          description: The minimum amount of phosphorus the recipes must have.
+          required: false
+          schema:
+            type: number
+        - name: maxPhosphorus
+          in: query
+          description: The maximum amount of phosphorus the recipes can have.
+          required: false
+          schema:
+            type: number
+        - name: minPotassium
+          in: query
+          description: The minimum amount of potassium the recipes must have.
+          required: false
+          schema:
+            type: number
+        - name: maxPotassium
+          in: query
+          description: The maximum amount of potassium the recipes can have.
+          required: false
+          schema:
+            type: number
+        - name: offset
+          in: query
+          description: The number of results to skip (between 0 and 900).
+          required: false
+          schema:
+            type: number
+        - name: number
+          in: query
+          description: The number of expected results (between 1 and 100).
+          required: false
+          schema:
+            type: number
+        - name: limitLicense
+          in: query
+          description: Whether the recipes should have an open license that allows display with proper attribution.
+          required: false
+          schema:
+            type: boolean
+        - name: minSelenium
+          in: query
+          description: The minimum amount of selenium the recipes must have.
+          required: false
+          schema:
+            type: number
+        - name: maxSelenium
+          in: query
+          description: The maximum amount of selenium the recipes can have.
+          required: false
+          schema:
+            type: number
+        - name: minSodium
+          in: query
+          description: The minimum amount of sodium the recipes must have.
+          required: false
+          schema:
+            type: number
+        - name: maxSodium
+          in: query
+          description: The maximum amount of sodium the recipes can have.
+          required: false
+          schema:
+            type: number
+        - name: minSugar
+          in: query
+          description: The minimum amount of sugar the recipes must have.
+          required: false
+          schema:
+            type: number
+        - name: maxSugar
+          in: query
+          description: The maximum amount of sugar the recipes can have.
+          required: false
+          schema:
+            type: number
+        - name: minZinc
+          in: query
+          description: The minimum amount of zinc the recipes must have.
+          required: false
+          schema:
+            type: number
+        - name: maxZinc
+          in: query
+          description: The maximum amount of zinc the recipes can have.
+          required: false
+          schema:
+            type: number
+      x-dependencies:
+        - IF cuisines AND excludeCuisines THEN cuisines != excludeCuisines;
+        - IF minCarbs AND maxCarbs THEN minCarbs < maxCarbs;
+        - IF minProtein AND maxProtein THEN minProtein < maxProtein;
+        - IF minCalories AND maxCalories THEN minCalories < maxCalories;
+        - IF minFat AND maxFat THEN minFat < maxFat;
+        - IF minAlcohol AND maxAlcohol THEN minAlcohol < maxAlcohol;
+        - IF minCaffeine AND maxCaffeine THEN minCaffeine < maxCaffeine;
+        - IF minCopper AND maxCopper THEN minCopper < maxCopper;
+        - IF minCalcium AND maxCalcium THEN minCalcium < maxCalcium;
+        - IF minCholine AND maxCholine THEN minCholine < maxCholine;
+        - IF minCholesterol AND maxCholesterol THEN minCholesterol < maxCholesterol;
+        - IF minFluoride AND maxFluoride THEN minFluoride < maxFluoride;
+        - IF minSaturatedFat AND maxSaturatedFat THEN minSaturatedFat < maxSaturatedFat;
+        - IF minVitaminA AND maxVitaminA THEN minVitaminA < maxVitaminA;
+        - IF minVitaminC AND maxVitaminC THEN minVitaminC < maxVitaminC;
+        - IF minVitaminD AND maxVitaminD THEN minVitaminD < maxVitaminD;
+        - IF minVitaminE AND maxVitaminE THEN minVitaminE < maxVitaminE;
+        - IF minVitaminK AND maxVitaminK THEN minVitaminK < maxVitaminK;
+        - IF minVitaminB1 AND maxVitaminB1 THEN minVitaminB1 < maxVitaminB1;
+        - IF minVitaminB2 AND maxVitaminB2 THEN minVitaminB2 < maxVitaminB2;
+        - IF minVitaminB5 AND maxVitaminB5 THEN minVitaminB5 < maxVitaminB5;
+        - IF minVitaminB3 AND maxVitaminB3 THEN minVitaminB3 < maxVitaminB3;
+        - IF minVitaminB6 AND maxVitaminB6 THEN minVitaminB6 < maxVitaminB6;
+        - IF minVitaminB12 AND maxVitaminB12 THEN minVitaminB12 < maxVitaminB12;
+        - IF minFiber AND maxFiber THEN minFiber < maxFiber;
+        - IF minFolate AND maxFolate THEN minFolate < maxFolate;
+        - IF minFolicAcid AND maxFolicAcid THEN minFolicAcid < maxFolicAcid;
+        - IF minIodine AND maxIodine THEN minIodine < maxIodine;
+        - IF minIron AND maxIron THEN minIron < maxIron;
+        - IF minMagnesium AND maxMagnesium THEN minMagnesium < maxMagnesium;
+        - IF minManganese AND maxManganese THEN minManganese < maxManganese;
+        - IF minPhosphorus AND maxPhosphorus THEN minPhosphorus < maxPhosphorus;
+        - IF minPotassium AND maxPotassium THEN minPotassium < maxPotassium;
+        - IF minSelenium AND maxSelenium THEN minSelenium < maxSelenium;
+        - IF minSodium AND maxSodium THEN minSodium < maxSodium;
+        - IF minSugar AND maxSugar THEN minSugar < maxSugar;
+        - IF minZinc AND maxZinc THEN minZinc < maxZinc;
+      responses:
+        '200':
+          description: Successful response containing recipes.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  offset:
+                    type: integer
+                  number:
+                    type: integer
+                  results:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        title:
+                          type: string
+                        image:
+                          type: string
+                        imageType:
+                          type: string
+                  totalResults:
+                    type: integer
+        400:
+          description: Bad request
+        default:
+            description: Unexpected error

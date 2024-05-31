@@ -15,7 +15,7 @@ servers:
   # - url: https://api.yelp.com/v3
    - url: http://localhost:8080/v3
 paths:
-  "/transactions/{transaction_type}/search":
+  "/transactions/delivery/search":
     get:
       operationId: getTransactions
       summary: Get transactions
@@ -37,17 +37,26 @@ paths:
           description: Required if location is not provided. Latitude of the location
             you want to search nearby.
           schema:
-            type: number
-            minimum: -90
-            maximum: 90
+            type: string
+ #           minimum: -90
+ #           maximum: 90
         - name: longitude
           in: query
           description: Required if location is not provided. Longitude of the location
             you want to search nearby.
           schema:
-            type: number
-            minimum: -180
-            maximum: 180
+            type: string
+    #        minimum: -180
+     #       maximum: 180
+        - name: term
+          in: query
+          description: Optional. Search term, for example "food" or "restaurants". The
+            term may also be business names, such as "Starbucks". If term is not included
+            the endpoint will default to searching across businesses from a small number
+            of popular categories.
+          required: false
+          schema:
+            type: string
       x-dependencies:
         - Or(location, latitude AND longitude);
       responses:

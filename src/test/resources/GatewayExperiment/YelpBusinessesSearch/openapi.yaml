@@ -34,17 +34,17 @@ paths:
         description: Required if location is not provided. Latitude of the location
           you want to search nearby.
         schema:
-          type: number
-          minimum: -90
-          maximum: 90
+          type: string
+         # minimum: -90
+        #  maximum: 90
       - name: longitude
         in: query
         description: Required if location is not provided. Longitude of the location
           you want to search nearby.
         schema:
-          type: number
-          minimum: -180
-          maximum: 180
+          type: string
+         # minimum: -180
+         # maximum: 180
       - name: term
         in: query
         description: Optional. Search term, for example "food" or "restaurants". The
@@ -144,8 +144,8 @@ paths:
         required: false
         schema:
           type: integer
-          minimum: 1696931547
-          maximum: 1698061947
+          minimum: 1702196246
+          maximum: 1702631846
       - name: attributes
         in: query
         description: Optional. Try these additional filters to return specific search
@@ -219,6 +219,7 @@ paths:
         - ZeroOrOne(open_now == true, open_at);
         - offset + limit <= 1000;
         - IF offset AND NOT limit THEN offset <= 980;
+        - IF offset AND limit == 0 THEN offset <= 980;
         - AllOrNone(reservation_date, reservation_time, reservation_covers);
       responses:
         200:

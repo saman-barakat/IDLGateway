@@ -1,78 +1,246 @@
 spring:
   cloud:
     gateway:
-     # default-filters:
-      #  - name: IDLFilter
-      #    args:
-            #analysis: Detection
-        #    analysis: Explanation
-            #analysis: None
       routes:
-        - id: YelpAPI
+        - id: OMDbSearchByIdOrTitle
+          uri: https://omdbapi.com
+          predicates:
+            - Path=/test/**
+          filters:
+            - name: DependencyFilter
+              args:
+                analysis: None
+                #analysis: Detection
+                #analysis: Explanation
+                serviceName: "OMDbSearchByIdOrTitle"
+                operationPath: "/"
+                SPECPath: "/OMDbSearchByIdOrTitle/swagger.yaml"
+                csvPath: "/OMDbSearchByIdOrTitle/OMDbSearchByIdOrTitle.csv"
+        - id: YelpAPI # 1
           uri: https://api.yelp.com
           predicates:
             - Path=/v3/businesses/**
           filters:
-            - name: IDLFilter
+            - name: DependencyFilter
               args:
                 #analysis: Detection
-                #analysis: Explanation
-                analysis: None
-                serviceName: "Yelp"
+                analysis: Explanation
+                #analysis: None
+                serviceName: "YelpBusinessesSearch"
                 operationPath: "/businesses/search"
                 SPECPath: "/YelpBusinessesSearch/openapi.yaml"
-                #csvPath: "/YelpBusinessesSearch/ValidRequests/YelpBusinessesSearch.csv"
-                csvPath: "/YelpBusinessesSearch/ValidRequests/YelpBusinessesSearch.csv"
-        - id: YelpTransactionsAPI
+                csvPath: "/YelpBusinessesSearch/YelpBusinessesSearch.csv"
+        - id: YelpTransactionsSearch # 2
           uri: https://api.yelp.com
           predicates:
             - Path=/v3/transactions/**
-        - id: SpoonacularAPIRecipesComplexSearch
+          filters:
+            - name: DependencyFilter
+              args:
+                #analysis: Detection
+                analysis: Explanation
+                #analysis: None
+                serviceName: "YelpTransactionsSearch"
+                operationPath: "/transactions/delivery/search"
+                SPECPath: "/YelpTransactionsSearch/openapi.yaml"
+                csvPath: "/YelpTransactionsSearch/YelpTransactionsSearch.csv"
+        - id: SpoonacularRecipes
           uri: https://api.spoonacular.com
           predicates:
             - Path=/recipes/**
           filters:
-            - name: IDLFilter
+            - name: DependencyFilter
               args:
-                analysis: Detection
+                analysis: None
+                #analysis: Detection
                 #analysis: Explanation
-                #analysis: None
-        - id: BoxFoldersAPI
+                serviceName: "SpoonacularRecipes"
+                operationPath: "/recipes/complexSearch"
+                SPECPath: "/SpoonacularRecipes/openapi.yaml"
+                csvPath: "/SpoonacularRecipes/SpoonacularRecipes.csv"
+        - id: FootballTeams # 3
+          uri: https://v3.football.api-sports.io/
+          predicates:
+            - Path=/teams/**
+          filters:
+            - name: DependencyFilter
+              args:
+                analysis: None
+                #analysis: Detection
+                #analysis: Explanation
+                serviceName: "FootballTeams"
+                operationPath: "/teams"
+                SPECPath: "/FootballTeams/openapi.yaml"
+                csvPath: "/FootballTeams/FootballTeams.csv"
+        - id: FootballLeagues
+          uri: https://v3.football.api-sports.io/
+          predicates:
+            - Path=/leagues/**
+          filters:
+            - name: DependencyFilter
+              args:
+                analysis: None
+                #analysis: Detection
+                #analysis: Explanation
+                serviceName: "FootballLeagues"
+                operationPath: "/leagues"
+                SPECPath: "/FootballLeagues/openapi.yaml"
+                csvPath: "/FootballLeagues/FootballLeagues.csv"
+        - id: BoxFolderItems # 4
           uri: https://api.box.com
           predicates:
             - Path=/2.0/**
-        - id: GitHubAPI
+          filters:
+            - name: DependencyFilter
+              args:
+                #analysis: Detection
+                analysis: Explanation
+                #analysis: None
+                serviceName: "BoxFolderItems"
+                operationPath: "/folders/{folder_id}/items"
+                SPECPath: "/BoxFolderItems/openapi.yaml"
+                csvPath: "/BoxFolderItems/BoxFolderItems.csv"
+        - id: GitHubAPI # 5
           uri: https://api.github.com
           predicates:
             - Path=/user/**
-        - id: AmadeusFlightAPI
+          filters:
+            - name: DependencyFilter
+              args:
+                #analysis: None
+                #analysis: Detection
+                analysis: Explanation
+                serviceName: "GitHubUserRepos"
+                operationPath: "/user/repos"
+                SPECPath: "/GitHubUserRepos/openapi.yaml"
+                csvPath: "/GitHubUserRepos/GitHubUserRepos.csv"
+        - id: AmadeusFlightAPI # 6
           uri: https://test.api.amadeus.com
           predicates:
             - Path=/v2/shopping/**
-        - id: AmadeusHotelAPI
+          filters:
+            - name: DependencyFilter
+              args:
+                #analysis: None
+                #analysis: Detection
+                analysis: Explanation
+                serviceName: "AmadeusFlightOffers"
+                operationPath: "/shopping/flight-offers"
+                SPECPath: "/AmadeusFlightOffers/openapi.yaml"
+                csvPath: "/AmadeusFlightOffers/AmadeusFlightOffers.csv"
+        - id: AmadeusHotelAPI # 7
           uri: https://test.api.amadeus.com
           predicates:
             - Path=/v3/shopping/**
+          filters:
+            - name: DependencyFilter
+              args:
+                #analysis: None
+                #analysis: Detection
+                analysis: Explanation
+                serviceName: "AmadeusHotelOffers"
+                operationPath: "/shopping/hotel-offers"
+                SPECPath: "/AmadeusHotelOffers/swagger.yaml"
+                csvPath: "/AmadeusHotelOffers/AmadeusHotelOffers.csv"
+        - id: OhsomeElementsArea # 8
+          uri: https://api.ohsome.org
+          predicates:
+            - Path=/v1/elements/area
+          filters:
+            - name: DependencyFilter
+              args:
+                #analysis: None
+                #analysis: Detection
+                analysis: Explanation
+                serviceName: "OhsomeElementsArea"
+                operationPath: "/elements/area"
+                SPECPath: "/Ohsome/swagger.yaml"
+                csvPath: "/OhsomeElementsArea/OhsomeElementsArea.csv"
+        - id: OhsomeElementsAreaRatio # 9
+          uri: https://api.ohsome.org
+          predicates:
+            - Path=/v1/elements/area/ratio
+          filters:
+            - name: DependencyFilter
+              args:
+                #analysis: None
+                #analysis: Detection
+                analysis: Explanation
+                serviceName: "OhsomeElementsAreaRatio"
+                operationPath: "/elements/area/ratio"
+                SPECPath: "/Ohsome/swagger.yaml"
+                csvPath: "/OhsomeElementsAreaRatio/OhsomeElementsAreaRatio.csv"
+        - id: OhsomeElementsCount # 10
+          uri: https://api.ohsome.org
+          predicates:
+            - Path=/v1/elements/count
+          filters:
+            - name: DependencyFilter
+              args:
+                #analysis: None
+                analysis: Detection
+                #analysis: Explanation
+                serviceName: "OhsomeElementsCount"
+                operationPath: "/elements/count"
+                SPECPath: "/Ohsome/swagger.yaml"
+                csvPath: "/OhsomeElementsCount/OhsomeElementsCount.csv"
         - id: YoutubeAPI
           uri: https://youtube.googleapis.com
           predicates:
             - Path=/youtube/**
+          filters:
+            - name: DependencyFilter
+              args:
+                analysis: None
+                #analysis: Detection
+                #analysis: Explanation
+                serviceName: "YouTubeSearch"
+                operationPath: "/youtube/v3/search"
+                SPECPath: "/YouTube/openapi.yaml"
+                csvPath: "/YouTubeSearch/YouTubeSearch.csv"
+        - id: YoutubeAPICommentThreads
+          uri: https://youtube.googleapis.com
+          predicates:
+            - Path=/XyoutubeX/**
+          filters:
+            - name: DependencyFilter
+              args:
+                analysis: None
+                #analysis: Detection
+                #analysis: Explanation
+                serviceName: "YouTubeCommentThreads"
+                operationPath: "/youtube/v3/commentThreads"
+                SPECPath: "/YouTube/openapi.yaml"
+                csvPath: "/YouTubeCommentThreads/YouTubeCommentThreads.csv"
         - id: DHLAPI
           uri: https://api.dhl.com
           predicates:
             - Path=/location-finder/v1/**
-        - id: FSQAPI
+        - id: FSQAPI # 11
           uri: https://api.foursquare.com
           predicates:
             - Path=/v3/places/**
-        - id: TumblrAPI
+          filters:
+            - name: DependencyFilter
+              args:
+                #analysis: None
+                #analysis: Detection
+                analysis: Explanation
+                serviceName: "FSQPlaceSearch"
+                operationPath: "/places/search"
+                SPECPath: "/FSQPlaceSearch/openapi.yaml"
+                csvPath: "/FSQPlaceSearch/FSQPlaceSearch.csv"
+        - id: TumblrBlogLikes # 12
           uri: https://api.tumblr.com
           predicates:
             - Path=/v2/blog/**
-        #- id: OMDbAPI
-        #  uri: http://omdbapi.com
-        #  predicates:
-        #    - Path=/
-app:
-  RequestMode: ValidRequests
-  #RequestMode: InvalidRequests
+          filters:
+            - name: DependencyFilter
+              args:
+                #analysis: None
+                #analysis: Detection
+                analysis: Explanation
+                serviceName: "TumblrBlogLikes"
+                operationPath: "/blog/{blog-identifier}/likes"
+                SPECPath: "/TumblrBlogLikes/swagger.yaml"
+                csvPath: "/TumblrBlogLikes/TumblrBlogLikes.csv"
