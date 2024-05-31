@@ -1,0 +1,134 @@
+openapi: 3.0.0
+info:
+  title: API Football - Leagues API
+  version: 3.0.0
+  description: Get the list of available leagues and cups
+  termsOfService: 'https://www.api-football.com/terms'
+  contact:
+    email: 'contact@api-football.com'
+servers:
+  #- url: https://v3.football.api-sports.io/
+  - url: http://idl.us.es/idlgateway/
+paths:
+  /leagues:
+    get:
+      tags:
+        - Leagues
+      summary: Get all leagues
+      description: Retrieve all the leagues available in the API.
+      parameters:
+        - name: id
+          in: query
+          description: The id of the league.
+          required: false
+          schema:
+            type: integer
+        - name: name
+          in: query
+          description: The name of the league.
+          required: false
+          schema:
+            type: string
+        - name: country
+          in: query
+          description: The country name of the league.
+          required: false
+          schema:
+            type: string
+        - name: code
+          in: query
+          description: The Alpha2 code of the country (e.g., FR, GB, IT).
+          required: false
+          schema:
+            type: string
+            pattern: '^[A-Z]{2}$'
+        - name: season
+          in: query
+          description: The season of the league in YYYY format.
+          required: false
+          schema:
+            type: integer
+            format: int32
+            pattern: '^\d{4}$'
+        - name: team
+          in: query
+          description: The id of the team.
+          required: false
+          schema:
+            type: integer
+        - name: type
+          in: query
+          description: The type of the league.
+          required: false
+          schema:
+            type: string
+            enum:
+              - league
+              - cup
+        - name: current
+          in: query
+          description: The state of the league. Returns the list of active seasons or the last season.
+          required: false
+          schema:
+            type: string
+            enum:
+              - "true"
+              - "false"
+        - name: search
+          in: query
+          description: The name or the country of the league.
+          required: false
+          schema:
+            type: string
+            minLength: 3
+        - name: last
+          in: query
+          description: The X last leagues/cups added in the API.
+          required: false
+          schema:
+            type: integer
+            format: int32
+            maximum: 99
+      x-dependencies:
+        - IF search THEN NOT (name OR country);
+      responses:
+        '200':
+          description: Successful operation
+        '400':
+          description: Bad request
+        '500':
+          description: Internal server error
+        default:
+          description: Unexpected error
+components:
+  schemas:
+    League:
+      type: object
+      properties:
+        league:
+          type: object
+          properties:
+            id:
+              type: integer
+              description: ID of the league.
+            name:
+              type: string
+              description: Name of the league.
+            type:
+              type: string
+              description: Type of the league (Club or National).
+            logo:
+              type: string
+              description: URL of the league's logo.
+            country:
+              type: string
+              description: Country of the league.
+            founded:
+              type: integer
+              description: Year the league was founded.
+            season:
+              type: integer
+              description: Current season of the league.
+            teams:
+              type: integer
+              description: Number of teams in the league.

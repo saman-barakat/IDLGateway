@@ -1,0 +1,10 @@
+API,Operation,RequestParams,ResponseStatus,DateAndTime,DependencyFilterMode,AnalysisTime,ServerResponseTime
+FSQPlaceSearch,/places/search,"{open_now=true, query=restaurant, ne=37.4313,-5.8501}",400 BAD_REQUEST,2024-05-31 12:59:54,Explanation,132.8648,0.0
+FSQPlaceSearch,/places/search,"{open_now=true, query=restaurant, ne=37.4313,-5.8501}",400 BAD_REQUEST,2024-05-31 13:00:29,Explanation,113.9983,0.0
+FSQPlaceSearch,/places/search,"{open_now=true, query=restaurant, ne=37.4313,-5.8501}",400 BAD_REQUEST,2024-05-31 13:01:52,Explanation,2273.6919,0.0
+FSQPlaceSearch,/places/search,"{open_now=true, query=restaurant, ne=37.4313,-5.8501}",400 BAD_REQUEST,2024-05-31 13:02:43,Explanation,2275.515,0.0
+FSQPlaceSearch,/places/search,"{open_now=true, query=restaurant, ne=37.4313,-5.8501}",400 BAD_REQUEST,2024-05-31 13:05:53,Explanation,2612.2273,0.0
+FSQPlaceSearch,/places/search,"{open_now=true, query=restaurants, ne=37.4313,-5.8501}",400 BAD_REQUEST,2024-05-31 13:29:46,Explanation,186.7461,0.0
+FSQPlaceSearch,/places/search,"{open_now=true, query=restaurants, ne=37.4313,-5.8501}",400 BAD_REQUEST,2024-05-31 13:30:56,Explanation,2137.4165,0.0
+FSQPlaceSearch,/places/search,"{open_now=true, sw=37.4313,-5.8501, query=restaurant, ne=37.4313,-5.8501}",400 BAD_REQUEST,2024-05-31 13:31:13,Explanation,92.0897,984.5801
+FSQPlaceSearch,/places/search,"{open_now=true, sw=37.4313,-5.8501, query=restaurant}",400 BAD_REQUEST,2024-05-31 13:31:27,Explanation,169.0113,0.0

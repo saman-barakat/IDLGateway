@@ -1,0 +1,5 @@
+API,Operation,RequestParams,ResponseStatus,DateAndTime,DependencyFilterMode,AnalysisTime,ServerResponseTime
+OhsomeElementsArea,/elements/area,"{filter=natural, bboxes=-6.0499,37.3189,-5.9043,37.4281, time=2023, timeout=300, bcircles=-5.9940,37.3886,5000}",400 BAD_REQUEST,2024-05-31 12:57:07,Explanation,3187.6356,0.0
+OhsomeElementsArea,/elements/area,"{filter=natural, bboxes=-6.0499,37.3189,-5.9043,37.4281, time=2023, timeout=300}",400 BAD_REQUEST,2024-05-31 12:57:40,Explanation,570.6769,848.5667
+OhsomeElementsArea,/elements/area,"{filter=building=*, bboxes=-6.0499,37.3189,-5.9043,37.4281, time=2023, timeout=300}",200 OK,2024-05-31 12:58:31,Explanation,322.7824,5146.8754
+OhsomeElementsArea,/elements/area,"{filter=building=*, bboxes=-6.0499,37.3189,-5.9043,37.4281, time=2023, timeout=300, bcircles=-5.9940,37.3886,5000}",400 BAD_REQUEST,2024-05-31 12:58:42,Explanation,291.6336,0.0

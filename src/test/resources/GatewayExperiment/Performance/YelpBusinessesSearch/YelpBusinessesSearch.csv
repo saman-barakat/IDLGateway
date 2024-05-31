@@ -1,0 +1,14 @@
+API,Operation,RequestParams,ResponseStatus,DateAndTime,DependencyFilterMode,AnalysisTime,ServerResponseTime
+YelpBusinessesSearch,/businesses/search,"{open_now=true, reservation_covers=2, latitude=37.3886, term=restaurants, longitude=-5.9823}",400 BAD_REQUEST,2024-05-31 13:06:45,Explanation,142.5788,0.0
+YelpBusinessesSearch,/businesses/search,"{open_now=true, latitude=37.3886, term=restaurants, longitude=-5.9823}",200 OK,2024-05-31 13:07:11,Explanation,133.8964,1591.7984
+YelpBusinessesSearch,/businesses/search,"{open_now=true, reservation_covers=2, latitude=37.3886, term=restaurants, longitude=-5.9823}",400 BAD_REQUEST,2024-05-31 13:07:27,Explanation,139.4839,0.0
+YelpBusinessesSearch,/businesses/search,"{open_now=true, reservation_covers=2, latitude=37.3886, term=restaurants, longitude=-5.9823}",400 BAD_REQUEST,2024-05-31 13:08:41,Explanation,2580.7063,0.0
+YelpBusinessesSearch,/businesses/search,"{open_now=true, reservation_covers=2, latitude=37.3886, term=restaurants, longitude=-5.9823}",400 BAD_REQUEST,2024-05-31 13:09:42,Detection,2130.7822,0.0
+YelpBusinessesSearch,/businesses/search,"{open_now=true, reservation_covers=2, latitude=37.3886, term=restaurants, longitude=-5.9823}",400 BAD_REQUEST,2024-05-31 13:11:35,Detection,2199.2929,0.0
+YelpBusinessesSearch,/businesses/search,"{open_now=true, latitude=37.3886, term=restaurants}",400 BAD_REQUEST,2024-05-31 13:11:56,Detection,114.0519,0.0
+YelpBusinessesSearch,/businesses/search,"{open_now=true, latitude=37.3886, term=restaurants}",400 BAD_REQUEST,2024-05-31 13:16:18,Detection,2109.7248,0.0
+YelpBusinessesSearch,/businesses/search,"{open_now=true, latitude=37.3886, term=restaurants}",400 BAD_REQUEST,2024-05-31 13:22:38,Detection,2211.4808,0.0
+YelpBusinessesSearch,/businesses/search,"{open_now=true, latitude=37.3886, term=restaurants}",400 BAD_REQUEST,2024-05-31 13:24:45,Detection,2148.058,0.0
+YelpBusinessesSearch,/businesses/search,"{open_now=true, latitude=37.3886, term=restaurants}",400 BAD_REQUEST,2024-05-31 13:26:09,Detection,2096.8273,0.0
+YelpBusinessesSearch,/businesses/search,"{open_now=true, latitude=37.3886, term=restaurants}",400 BAD_REQUEST,2024-05-31 13:28:25,Detection,2091.3379,0.0
+YelpBusinessesSearch,/businesses/search,"{open_now=true, latitude=37.3886, term=restaurants}",400 BAD_REQUEST,2024-05-31 13:29:03,Explanation,2224.3298,0.0

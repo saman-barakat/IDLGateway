@@ -1,0 +1,2 @@
+API,Operation,RequestParams,ResponseStatus,DateAndTime,DependencyFilterMode,AnalysisTime,ServerResponseTime,ErrorMessage
+AmadeusFlightOffers,/shopping/flight-offers,"{returnDate=2024-05-15, destinationLocationCode=BCN, children=4, adults=x, originLocationCode=SVQ, departureDate=2024-05-12}",400 BAD_REQUEST,2024-05-16 15:29:48,Explanation,0.0,0.0,"For input string: ""x"""

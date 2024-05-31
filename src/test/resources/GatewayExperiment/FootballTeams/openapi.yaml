@@ -1,0 +1,124 @@
+openapi: 3.0.0
+info:
+  title: API Football Documentation
+  version: 3.0.0
+  description:
+  termsOfService: 'https://www.api-football.com/terms'
+  contact:
+    email: 'contact@api-football.com'
+servers:
+  - url: https://v3.football.api-sports.io/
+  #- http://idl.us.es/idlgateway/
+paths:
+  /teams:
+    get:
+      tags:
+        - Leagues
+      summary: Get all Teams
+      description: Retrieve all the leagues available in the API.
+      parameters:
+        - name: id
+          in: query
+          description: The id of the team.
+          required: false
+          schema:
+            type: integer
+        - name: name
+          in: query
+          description: The name of the team.
+          required: false
+          schema:
+            type: string
+        - name: league
+          in: query
+          description: The id of the league.
+          required: false
+          schema:
+            type: integer
+        - name: season
+          in: query
+          description: The season of the league in YYYY format.
+          required: false
+          schema:
+            type: string
+            #format: int32
+           # pattern: '^\d{4}$'
+        - name: country
+          in: query
+          description: The country name of the team.
+          required: false
+          schema:
+            type: string
+        - name: code
+          in: query
+          description: The code of the team (3 characters).
+          required: false
+          schema:
+            type: string
+            pattern: '^[A-Z]{3}$'
+        - name: venue
+          in: query
+          description: The id of the venue.
+          required: false
+          schema:
+            type: integer
+        - name: search
+          in: query
+          description: The name or the country name of the team.
+          required: false
+          schema:
+            type: string
+            minLength: 3
+      x-dependencies:
+        - Or(id, name, league, season, country, code, venue, search);
+        - IF search THEN NOT (id OR name OR league OR season OR country OR code OR venue);
+        - AllOrNone(league, season);
+      responses:
+        '200':
+          description: Successful operation
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found
+        '429':
+          description: Too many requests
+        '500':
+          description: Internal server error
+        default:
+          description: Unexpected error
+components:
+  schemas:
+    League:
+      type: object
+      properties:
+        league:
+          type: object
+          properties:
+            id:
+              type: integer
+              description: ID of the league.
+            name:
+              type: string
+              description: Name of the league.
+            type:
+              type: string
+              description: Type of the league (Club or National).
+            logo:
+              type: string
+              description: URL of the league's logo.
+            country:
+              type: string
+              description: Country of the league.
+            founded:
+              type: integer
+              description: Year the league was founded.
+            season:
+              type: integer
+              description: Current season of the league.
+            teams:
+              type: integer
+              description: Number of teams in the league.
