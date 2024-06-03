@@ -6,26 +6,22 @@ import es.us.isa.idlreasonerchoco.analyzer.OASAnalyzer;
 import es.us.isa.idlreasonerchoco.configuration.IDLException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
-import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
-import java.net.URI;
 import java.util.Map;
 
 @Component
-public class DependencyFilter extends AbstractGatewayFilterFactory<DependencyFilter.Config> {
-    final Logger logger = LoggerFactory.getLogger(DependencyFilter.class);
+public class IDLFilter extends AbstractGatewayFilterFactory<IDLFilter.Config> {
+    final Logger logger = LoggerFactory.getLogger(IDLFilter.class);
 
-    public DependencyFilter() {
+    public IDLFilter() {
         super(Config.class);
-        logger.info("DependencyFilter constructor");
+        logger.info("IDLFilter constructor");
     }
 
     private static final String BASE_SPEC_PATH = "./src/test/resources/GatewayExperiment";
