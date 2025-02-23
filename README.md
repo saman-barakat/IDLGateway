@@ -124,6 +124,7 @@ spring:
                 analysis: <AnalysisMode>  # Options: Detection, Explanation, None
                 serviceName: "<ServiceName>"
                 operationPath: "<OperationPath>"
+                specPath: "<SPECPath>"
 ```
 
 ### Configuration Parameters  
@@ -136,6 +137,7 @@ spring:
 | **filters**    | Specifies the filter to be applied (`IDLFilter`). |
 | **analysis**   | Analysis mode (`Detection`, `Explanation`, or `None`). |
 | **operationPath** | API operation path (`<OperationPath>`). |
+| **specPath** | Path to the OpenAPI specification file (`<SPECPath>`). |
 
 
 ### Example: Yelp Transactions Search  
@@ -157,5 +159,6 @@ spring:
                 analysis: Explanation  # Options: Detection, Explanation, None
                 serviceName: "YelpTransactionsSearch"
                 operationPath: "/transactions/delivery/search"
+                specPath: "/YelpBusinessesSearch/openapi.yaml"
 ```
 
