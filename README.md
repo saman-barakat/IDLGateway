@@ -1,30 +1,146 @@
-# IDLFilter for Spring Cloud Gateway
+# IDLFilter for Spring Cloud Gateway  
 
-## Overview
+## Overview  
 
-IDLFilter is a custom filter for Spring Cloud Gateway, specifically designed to manage inter-parameter dependencies in web APIs.
+`IDLFilter` is a custom filter for **Spring Cloud Gateway**, designed to handle **inter-parameter dependencies** in web APIs. It ensures that API requests comply with constraints defined in an **OpenAPI Specification (OAS) file**, applying specific analysis modes:  
+
+- **Detection** – Identifies constraint violations.  
+- **Explanation** – Provides reasons for violations.  
+- **None** – Disables validation.  
+
+This document provides instructions on configuring and applying `IDLFilter` in **Spring Cloud Gateway**, using an example service that interacts with the **Yelp API**.  
+
+---
+
+## How IDLFilter Works  
+
+`IDLFilter` extends `AbstractGatewayFilterFactory`, integrating `IDLReasoner` to validate API requests in three steps:  
+
+1. **Initialize the Analyzer** – Create an `IDLReasoner` instance with the **OAS file**, **operation path**, and **operation type**.  
+2. **Validate Requests** – Check if the request meets the defined constraints.
+3. **Generate Responses** – Return a response message if the request is invalid.
+
+---
+
+## Prerequisites  
+
+Before using `IDLFilter`, ensure the following dependencies are included in your project:  
+
+- **Java Development Kit (JDK) 11 or later**  
+- **IDLReasoner 1.0.1**  
+- **Spring Boot & Spring Cloud Gateway dependencies**  
+
+---
+
+## Simplified IDLFilter Code  
+
+Below is an example implementation of `IDLFilter`:  
+
+```java
+@Component
+public class IDLFilter extends AbstractGatewayFilterFactory<IDLFilter.Config> {
+    private final Logger logger = LoggerFactory.getLogger(IDLFilter.class);
+
+    public IDLFilter() {
+        super(Config.class);
+        logger.info("IDLFilter initialized");
+    }
+
+    private static final String BASE_SPEC_PATH = "./src/test/resources/GatewayExperiment";
+
+    @Override
+    public GatewayFilter apply(Config config) {
+        logger.info("Applying IDLFilter with [{}] analysis mode", config.analysis);
+
+        return (exchange, chain) -> {
+            String operationPath = config.operationPath;
+            String SPEC_URL = BASE_SPEC_PATH + config.specPath;
+            String operationType = exchange.getRequest().getMethod().name().toLowerCase();
+            Map<String, String> paramMap = exchange.getRequest().getQueryParams().toSingleValueMap();
+
+            try {
+                if ("Detection".equals(config.analysis) || "Explanation".equals(config.analysis)) {
+                    // Step 1: Initialize the Analyzer
+                    Analyzer analyzer = new OASAnalyzer(SPEC_URL, operationPath, operationType);
+
+                    // Step 2: Validate the Request
+                    boolean isValid = analyzer.isValidRequest(paramMap);
+
+                    // Step 3: Generate the Response if Invalid
+                    if (!isValid) {
+                        String responseMessage = "The request is invalid!";
+                        if ("Explanation".equalsIgnoreCase(config.analysis)) {
+                            responseMessage = analyzer.getExplanationMessage(paramMap).toString();
+                        }
+                        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, responseMessage);
+                    }
+                }
+            } catch (IDLException e) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+            }
+            return chain.filter(exchange);
+        };
+    }
+
+    public static class Config {
+        private String analysis;
+        private String specPath;
+        private String operationPath;
+
+        // Getters and setters
+        public String getOperationPath() { return operationPath; }
+        public void setOperationPath(String operationPath) { this.operationPath = operationPath; }
+
+        public String getSpecPath() { return specPath; }
+        public void setSpecPath(String specPath) { this.specPath = specPath; }
+
+        public String getAnalysis() { return analysis; }
+        public void setAnalysis(String analysis) { this.analysis = analysis; }
+    }
+}
+```
+## Configuration  
+
+To apply `IDLFilter` in **Spring Cloud Gateway**, update your `application.yaml` file with the appropriate route configuration.  
+
+### Step-by-Step Instructions  
+
+1. Navigate to `src/main/resources` in your Spring Boot project.  
+2. Open (or create) `application.yaml`.  
+3. Add a route configuration using the following structure:  
+
+```yaml
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: <UniqueRouteID>
+          uri: <TargetServiceURI>
+          predicates:
+            - Path=<RequestPathPattern>
+          filters:
+            - name: IDLFilter
+              args:
+                analysis: <AnalysisMode>  # Options: Detection, Explanation, None
+                serviceName: "<ServiceName>"
+                operationPath: "<OperationPath>"
+```
+
+### Configuration Parameters  
+
+| Parameter       | Description |
+|----------------|------------|
+| **id**         | Unique identifier for the route (`<UniqueRouteID>`). |
+| **uri**        | Target service URI (`<TargetServiceURI>`). |
+| **predicates** | Defines request matching conditions (routes only `<RequestPathPattern>`). |
+| **filters**    | Specifies the filter to be applied (`IDLFilter`). |
+| **analysis**   | Analysis mode (`Detection`, `Explanation`, or `None`). |
+| **operationPath** | API operation path (`<OperationPath>`). |
 
 
-## Overview
+### Example: Yelp Transactions Search  
 
-This document provides instructions on how to apply the IDLFilter in Spring Cloud Gateway. The IDLFilter is used to apply specific analysis (Detection, Explanation, None) to the service requests and responses passing through the gateway. In this example, we demonstrate how to configure the filter for a service that interfaces with the Yelp API.
-
-## Prerequisites
-
-- Java Development Kit (JDK) 11 or later
-- IDLReasoner 1.0.1.
-- Spring Boot and Spring Cloud dependencies included in your project
-
-
-## Configuration
-
-To apply the IDLFilter in Spring Cloud Gateway, you need to update your `application.yaml` configuration file. Below are the detailed steps to configure the filter for the Yelp Transactions Search service.
-
-### Step-by-Step Instructions
-
-1. Open your `application.yaml` file in your Spring Boot project's `src/main/resources` directory.
-
-2. Add the route configuration for the Yelp Transactions Search service as shown below:
+Below is an example configuration for applying `IDLFilter` to the **Yelp Transactions Search** API:
 
 ```yaml
 spring:
@@ -42,40 +158,4 @@ spring:
                 serviceName: "YelpTransactionsSearch"
                 operationPath: "/transactions/delivery/search"
 ```
-
-### Configuration Parameters
-
-- **id**: A unique identifier for the route. In this example, it is set to `YelpTransactionsSearch`.
-- **uri**: The URI of the target service. Here, it points to `https://api.yelp.com`.
-- **predicates**: Conditions that the request must meet for this route to be selected. The `Path` predicate ensures that only requests to `/v3/transactions/**` are routed.
-- **filters**: Specifies the filters to be applied to the requests and responses. 
-  - **name**: The name of the filter. In this case, it is `IDLFilter`.
-  - **args**: Arguments for the filter:
-    - **analysis**: Specifies the type of analysis to be applied. Options include `Detection`, `Explanation`, and `None`. For this example, it is set to `Explanation`.
-    - **serviceName**: The name of the service being routed. It is set to `YelpTransactionsSearch`.
-    - **operationPath**: The specific operation path for the service. It is set to `/transactions/delivery/search`.
-
-## Example
-
-The following example demonstrates how the configuration appears in the `application.yaml` file:
-
-```yaml
-spring:
-  cloud:
-    gateway:
-      routes:
-        - id: YelpTransactionsSearch
-          uri: https://api.yelp.com
-          predicates:
-            - Path=/v3/transactions/**
-          filters:
-            - name: IDLFilter
-              args:
-                analysis: Explanation
-                serviceName: "YelpTransactionsSearch"
-                operationPath: "/transactions/delivery/search"
-```
-
-By following these steps, you can successfully apply the IDLFilter to the Yelp Transactions Search route in your Spring Cloud Gateway application.
- 
 
